@@ -85,6 +85,20 @@ def display_items(data):
     console.print(table)
 
 
+def start_view():
+    console = Console()
+    ascii_art = """
+'||'                                      .                            
+ ||  .. ...   .... ...   ....  .. ...   .||.    ...   ... ..  .... ... 
+ ||   ||  ||   '|.  |  .|...||  ||  ||   ||   .|  '|.  ||' ''  '|.  |  
+ ||   ||  ||    '|.|   ||       ||  ||   ||   ||   ||  ||       '|.|   
+.||. .||. ||.    '|     '|...' .||. ||.  '|.'  '|..|' .||.       '|    
+                                                              .. |     
+                                                               ''
+"""
+
+    console.print(f"[green]{ascii_art}[/green]")
+  
 
 def main():
     """Run all program functions
@@ -93,6 +107,7 @@ def main():
     inventory_data = inventory_sheet.get_all_values()
     data = convert_to_dict(inventory_data)
     
+    start_view()
     display_items(data)
 
 main()
