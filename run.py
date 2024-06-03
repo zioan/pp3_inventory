@@ -3,6 +3,8 @@ from google.oauth2.service_account import Credentials
 from rich.console import Console
 from rich.prompt import Prompt
 from rich.table import Table
+import sys
+
 
 # Connect to Google Sheets API
 SCOPE = [
@@ -46,7 +48,7 @@ def convert_to_dict(data):
     return result 
 
 
-def display_items(data):
+def display_items(data, table_title):
     """Display inventory items in a formatted table using the Rich library.
     
     Args:
@@ -64,6 +66,7 @@ def display_items(data):
 
     # Create a table
     print("\n")
+    table = Table(title = table_title)
 
     # Add columns to the table with styles
     table.add_column("Index", style="yellow")
@@ -101,6 +104,35 @@ def start_view():
 """
 
     console.print(f"[green]{ascii_art}[/green]")
+    
+def display_menu():
+    console = Console()
+    console.print("[blue bold underline]Inventory Management System")
+    console.print("[green][bold]1.[/green][/bold] View Entire Inventory")
+    console.print("[green][bold]2.[/green][/bold] Search Inventory")
+    # console.print("[green][bold]3.[/green][/bold] Edit Item")
+    # print("4. Update Item")
+    # print("5. Delete Item")
+    # print("6. Help")
+    console.print("[green][bold]7.[/green][/bold] Exit Inventory")
+    choice = input("Enter your choice: ")
+    return choice
+
+
+def search_inventory(data):
+    console = Console()
+    
+    search_term = input("Enter the name of the item to search: ").strip()
+    found_items = [item for item in data if search_term.lower() in item["name"].lower()]
+    filtered_data = []
+    if found_items:
+        for item in found_items:
+            filtered_data.append(item)
+        display_items(filtered_data, f"Search results for {search_term:}")
+    else:
+        console.print(f"\n[red]No items found for [bold]'{search_term}'[/bold].\n")
+        search_inventory(data)
+        
   
 
 def main():
@@ -109,9 +141,32 @@ def main():
     inventory_sheet = SHEET.worksheet('inventory_sheet')
     inventory_data = inventory_sheet.get_all_values()
     data = convert_to_dict(inventory_data)
+    console = Console()
     
     start_view()
-    display_items(data)
+    
+    while True:
+        choice = display_menu()
+        if choice == "1":
+            display_items(data, "Inventory Items")
+        elif choice == "2":
+            search_inventory(data)
+        # elif choice == "3":
+        #     edit_item(inventory)
+        # elif choice == "4":
+        #     update_item(data)
+        # elif choice == "5":
+        #     delete_item(inventory)
+        # elif choice == "6":
+        #     display_help()
+        elif choice == "7":
+            print("Quitting the application...")
+            sys.exit()
+        else:
+            console.print("\n[red]Invalid operation. Please select again.\n")
+    
+    display_menu()
+    # display_items(data)
 
 main()
     
