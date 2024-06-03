@@ -35,7 +35,7 @@ def convert_to_dict(data):
     # Initialize an empty list to store the dictionaries
     result = []
     # Iterate over each row in the data starting from the second row
-    for i, row in enumerate(data[1:], start=2): # Start from 2 to match Google Sheets row numbers
+    for i, row in enumerate(data[1:], start=1): # Start from 1 to match Google Sheets row numbers
         # Create a dictionary for the current row
         row_dict = {
             "index": i, # Use the loop index as the row number. "index", number
