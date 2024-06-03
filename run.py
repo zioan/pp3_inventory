@@ -32,9 +32,10 @@ def convert_to_dict(data):
     # Initialize an empty list to store the dictionaries
     result = []
     # Iterate over each row in the data starting from the second row
-    for row in data[1:]:
+    for i, row in enumerate(data[1:], start=2): # Start from 2 to match Google Sheets row numbers
         # Create a dictionary for the current row
         row_dict = {
+            "index": i, # Use the loop index as the row number. "index", number
             headers[0].lower(): row[0],  # "name"
             headers[1].lower(): row[1],  # "type"
             headers[2].lower(): row[2],  # "quantity", string
@@ -62,9 +63,10 @@ def display_items(data):
         return
 
     # Create a table
-    table = Table(title="Inventory Items")
+    print("\n")
 
     # Add columns to the table with styles
+    table.add_column("Index", style="yellow")
     table.add_column("Name", style="yellow")
     table.add_column("Type", style="yellow")
     table.add_column("Quantity", justify="right", style="yellow")
@@ -74,6 +76,7 @@ def display_items(data):
     for item in data:
         # Add a row to the table for each item
         table.add_row(
+            str(item["index"]),
             item["name"],
             item["type"],
             item["quantity"],
@@ -82,7 +85,7 @@ def display_items(data):
         table.add_section() # Add a horizontal line after each row
 
      # Print the table to the console
-    console.print(table)
+    console.print(table, "\n")
 
 
 def start_view():
