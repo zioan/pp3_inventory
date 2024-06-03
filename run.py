@@ -122,13 +122,18 @@ def display_menu():
 def search_inventory(data):
     console = Console()
     
-    search_term = input("Enter the name of the item to search: ").strip()
+    search_term = input("Enter the name of the item to search (or '0' to return to menu): ").strip()
+    
+    if search_term == "0":
+        return  # Return to the main menu
+    
     found_items = [item for item in data if search_term.lower() in item["name"].lower()]
     filtered_data = []
     if found_items:
         for item in found_items:
             filtered_data.append(item)
-        display_items(filtered_data, f"Search results for {search_term:}")
+        display_items(filtered_data, f"Search results for {search_term}")
+        search_inventory(data) # Keep search active until user return to main menu
     else:
         console.print(f"\n[red]No items found for [bold]'{search_term}'[/bold].\n")
         search_inventory(data)
