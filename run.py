@@ -4,6 +4,7 @@ from rich.console import Console
 from rich.prompt import Prompt
 from rich.table import Table
 import sys
+import os
 
 
 # Connect to Google Sheets API
@@ -105,9 +106,9 @@ def start_view():
 
     console.print(f"[green]{ascii_art}[/green]")
     
-def display_menu():
+def main_menu():
     console = Console()
-    console.print("[blue bold underline]Inventory Management System")
+    console.print("[blue bold underline]Inventory Management System\n")
     console.print("[green][bold]1.[/green][/bold] View Entire Inventory")
     console.print("[green][bold]2.[/green][/bold] Search Inventory")
     # console.print("[green][bold]3.[/green][/bold] Edit Item")
@@ -119,30 +120,56 @@ def display_menu():
     return choice
 
 
-def search_inventory(data):
+def edit_menu():
+    console = Console()
+    console.print("[blue bold underline]Select an option:\n")
+    console.print("[green][bold]1.[/green][/bold] Edit")
+    console.print("[green][bold]2.[/green][/bold] Delete")
+    console.print("[green][bold]0.[/green][/bold] Go back")
+
+
+def search_inventory(data, previous_search=False):
     console = Console()
     
-    search_term = input("Enter the name of the item to search (or '0' to return to menu): ").strip()
+    # Display edit menu for the last search result
+    if previous_search:
+        edit_menu()
+    else:
+        console.print("\n[blue bold underline]Search Inventory")
+        console.print("[green][bold]0.[/green][/bold] Go back")
+        
+    search_term = input("Enter the name of the item to search (or other operation): ").strip()
     
     if search_term == "0":
+        print("Going back...")
         return  # Return to the main menu
+    elif search_term == "1":
+        print("Edit...")
+        search_inventory(data, True)
+        return
+    elif search_term == "2":
+        print("Delete...")
+        search_inventory(data, True)
+        return
     
     found_items = [item for item in data if search_term.lower() in item["name"].lower()]
     filtered_data = []
-    if found_items:
+    if found_items:       
+        # Render results and continue search loop
         for item in found_items:
             filtered_data.append(item)
         display_items(filtered_data, f"Search results for {search_term}")
-        search_inventory(data) # Keep search active until user return to main menu
+        search_inventory(data, True) # Keep search active until user return to main menu, pass True to indicate previous search
     else:
-        console.print(f"\n[red]No items found for [bold]'{search_term}'[/bold].\n")
-        search_inventory(data)
-        
+        console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
+        search_inventory(data, False) # Pass False to indicate no previous search
+            
   
 
 def main():
     """Run all program functions
     """
+    os.system("clear")
     inventory_sheet = SHEET.worksheet('inventory_sheet')
     inventory_data = inventory_sheet.get_all_values()
     data = convert_to_dict(inventory_data)
@@ -151,7 +178,7 @@ def main():
     start_view()
     
     while True:
-        choice = display_menu()
+        choice = main_menu()
         if choice == "1":
             display_items(data, "Inventory Items")
         elif choice == "2":
@@ -170,8 +197,7 @@ def main():
         else:
             console.print("\n[red]Invalid operation. Please select again.\n")
     
-    display_menu()
-    # display_items(data)
+    main_menu()
 
 main()
     
