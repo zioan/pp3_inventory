@@ -1,1 +1,11 @@
-# Your requirements go here
+cachetools==5.3.3
+evdev==1.7.1
+google-auth==2.29.0
+google-auth-oauthlib==1.2.0
+gspread==6.1.2
+oauthlib==3.2.2
+pyasn1==0.6.0
+pyasn1_modules==0.4.0
+python-xlib==0.33
+requests-oauthlib==2.0.0
+rsa==4.9
