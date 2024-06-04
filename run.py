@@ -20,6 +20,12 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('Inventory')
 
 
+def get_data():
+    inventory_sheet = SHEET.worksheet('inventory_sheet')
+    inventory_data = inventory_sheet.get_all_values()
+    data = convert_to_dict(inventory_data)
+    return data
+
 def convert_to_dict(data):
     """Convert data from Google Sheets API into a list of dictionaries.
     
@@ -148,8 +154,7 @@ def search_inventory(data, previous_search=False):
         search_inventory(data, True)
         return
     elif search_term == "2":
-        print("Delete...")
-        search_inventory(data, True)
+        delete_item(data)
         return
     
     found_items = [item for item in data if search_term.lower() in item["name"].lower()]
@@ -158,7 +163,8 @@ def search_inventory(data, previous_search=False):
         # Render results and continue search loop
         for item in found_items:
             filtered_data.append(item)
-        display_items(filtered_data, f"Search results for {search_term}")
+        table_title = 'f"Search results for {search_term}' if search_term else 'Inventory Items'
+        display_items(filtered_data, table_title)
         search_inventory(data, True) # Keep search active until user return to main menu, pass True to indicate previous search
     else:
         console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
@@ -166,13 +172,51 @@ def search_inventory(data, previous_search=False):
             
   
 
+def delete_item(data):
+    console = Console()
+    max_index = len(data)
+    
+    while True:
+        index_to_delete = Prompt.ask(f"Enter the index to delete an item (1 - {max_index}), or '0' to cancel")
+        
+        # Abort deletion
+        if index_to_delete == '0':
+            return
+        
+        try:
+            index_to_delete = int(index_to_delete)
+            if index_to_delete not in range(1, max_index + 1):
+                console.print(f"[red]Invalid index '{index_to_delete}'. Index should be between 1 and {max_index}.[/red]")
+                continue  # Prompt again
+        except ValueError:
+            console.print(f"[red]Invalid input '{index_to_delete}'. Please enter a number.[/red]")
+            continue  # Prompt again
+        
+        # Delete
+        item_to_delete = data[index_to_delete - 1]  # Adjust for 0-based indexing
+        
+        display_items([item_to_delete], "")
+        delete_confirmation = Prompt.ask(f"\n[red bold]Are you sure you want to delete this item?", choices=['y', 'n'])
+        if delete_confirmation.lower() == 'y':
+            # Remove the item from the data list
+            inventory_sheet = SHEET.worksheet('inventory_sheet')
+            inventory_sheet.delete_rows(index_to_delete + 1)
+            
+            console.print("[green]Item deleted successfully![/green]\n")
+        else:
+            console.print("[yellow]Deletion canceled![/yellow]")
+        break  # Exit the loop after handling the deletion
+    
+    # Refetch data and continue with search loop
+    data = get_data()
+    search_inventory(data, True)
+
+        
+
 def main():
     """Run all program functions
     """
     os.system("clear")
-    inventory_sheet = SHEET.worksheet('inventory_sheet')
-    inventory_data = inventory_sheet.get_all_values()
-    data = convert_to_dict(inventory_data)
     console = Console()
     
     start_view()
@@ -180,8 +224,10 @@ def main():
     while True:
         choice = main_menu()
         if choice == "1":
+            data = get_data()
             display_items(data, "Inventory Items")
         elif choice == "2":
+            data = get_data()
             search_inventory(data)
         # elif choice == "3":
         #     edit_item(inventory)
@@ -197,7 +243,6 @@ def main():
         else:
             console.print("\n[red]Invalid operation. Please select again.\n")
     
-    main_menu()
 
 main()
     
