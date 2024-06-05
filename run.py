@@ -114,47 +114,91 @@ def start_view():
     
 def main_menu():
     console = Console()
-    console.print("[blue bold underline]Inventory Management System\n")
-    console.print("[green][bold]1.[/green][/bold] View Entire Inventory")
-    console.print("[green][bold]2.[/green][/bold] Search Inventory")
-    # console.print("[green][bold]3.[/green][/bold] Edit Item")
-    # print("4. Update Item")
-    # print("5. Delete Item")
-    # print("6. Help")
-    console.print("[green][bold]7.[/green][/bold] Exit Inventory")
-    choice = input("Enter your choice: ")
-    return choice
-
-
-def edit_menu():
-    console = Console()
-    console.print("[blue bold underline]Select an option:\n")
-    console.print("[green][bold]1.[/green][/bold] Edit")
-    console.print("[green][bold]2.[/green][/bold] Delete")
-    console.print("[green][bold]0.[/green][/bold] Go back")
-
-
-def search_inventory(data, previous_search=False):
-    console = Console()
+    console.print("\n[blue bold underline]Inventory Management System")
     
-    # Display edit menu for the last search result
-    if previous_search:
-        edit_menu()
+    options = [
+        "[green][bold]1.[/green][/bold] View Inventory",
+        "[green][bold]2.[/green][/bold] Operations",
+        "[green][bold]0.[/green][/bold] Exit"
+    ]
+    
+    menu = " | ".join(options)
+    console.print(menu)
+    
+    choices = ["1", "2", "0"]
+    input = user_input("Choose an operation: ", choices, True)
+    
+    return input
+
+
+def operations_menu():
+    console = Console()
+    console.print("\n[blue bold underline]Operation selector")
+    options = [
+        "[green][bold]1.[/green][/bold] Add",
+        "[green][bold]2.[/green][/bold] Update",
+        "[green][bold]3.[/green][/bold] Delete",
+        "[green][bold]4.[/green][/bold] Search",
+        "[green][bold]0.[/green][/bold] Back",
+    ]
+    menu = " | ".join(options)
+    console.print(menu)    
+    
+    choices = ["1", "2", "3", "4", "0"]
+    input = user_input("Choose an operation: ", choices, True)
+    
+    if input == "1":
+        print("Add functionality not implemented yet...")
+    elif input == "2":
+        print("Update not implemented yet...")
+    elif input == "3":
+        delete_item()
+    elif input == "4":
+        search_inventory()
+    elif input == "0":
+        main_menu() # return to previous menu
     else:
-        console.print("\n[blue bold underline]Search Inventory")
-        console.print("[green][bold]0.[/green][/bold] Go back")
-        
-    search_term = input("Enter the name of the item to search (or other operation): ").strip()
+        operations_menu() # If no valid choice, than operations_menu run in a loop
+    
+
+def user_input(label, available_options, strict_input):
+    console = Console()
+    user_prompt = input(label).strip()
+    
+    if strict_input:
+        if user_prompt not in available_options:
+            console.print("[bold red]Please select one of the available options\n")
+            user_prompt = input(label)
+        else:
+            return user_prompt
+    else:
+        return user_prompt
+
+
+def search_inventory():
+    console = Console()
+    data = get_data()
+    
+    console.print("\n[blue bold underline]Search Inventory")
+    options = [
+        "[green][bold]1.[/green][/bold] Update",
+        "[green][bold]2.[/green][/bold] Delete",
+        "[green][bold]0.[/green][/bold] Back",
+    ]
+    menu = " | ".join(options)
+    console.print(menu) 
+    
+    search_term = user_input("Enter the name of the item to search (or other operation): ", "", False)
     
     if search_term == "0":
         print("Going back...")
         return  # Return to the main menu
     elif search_term == "1":
-        print("Edit...")
-        search_inventory(data, True)
+        print("Update not implemented yet...")
+        search_inventory()
         return
     elif search_term == "2":
-        delete_item(data)
+        delete_item()
         return
     
     found_items = [item for item in data if search_term.lower() in item["name"].lower()]
@@ -163,25 +207,25 @@ def search_inventory(data, previous_search=False):
         # Render results and continue search loop
         for item in found_items:
             filtered_data.append(item)
-        table_title = 'f"Search results for {search_term}' if search_term else 'Inventory Items'
+        table_title = f"Search results for {search_term}" if search_term else "Inventory Items"
         display_items(filtered_data, table_title)
-        search_inventory(data, True) # Keep search active until user return to main menu, pass True to indicate previous search
+        search_inventory() # Keep search active until user return to main menu
     else:
         console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
-        search_inventory(data, False) # Pass False to indicate no previous search
-            
-  
+        search_inventory() # Keep search active until user return to main menu
 
-def delete_item(data):
+
+def delete_item():
     console = Console()
+    data = get_data()
     max_index = len(data)
     
     while True:
-        index_to_delete = Prompt.ask(f"Enter the index to delete an item (1 - {max_index}), or '0' to cancel")
+        index_to_delete = user_input(f"Enter the index to delete an item (1 - {max_index}), or '0' to cancel: ", "", False)
         
-        # Abort deletion
+        # Abort deletion and return to operations menu
         if index_to_delete == '0':
-            return
+            operations_menu()
         
         try:
             index_to_delete = int(index_to_delete)
@@ -196,20 +240,26 @@ def delete_item(data):
         item_to_delete = data[index_to_delete - 1]  # Adjust for 0-based indexing
         
         display_items([item_to_delete], "")
-        delete_confirmation = Prompt.ask(f"\n[red bold]Are you sure you want to delete this item?", choices=['y', 'n'])
-        if delete_confirmation.lower() == 'y':
-            # Remove the item from the data list
-            inventory_sheet = SHEET.worksheet('inventory_sheet')
-            inventory_sheet.delete_rows(index_to_delete + 1)
-            
-            console.print("[green]Item deleted successfully![/green]\n")
-        else:
-            console.print("[yellow]Deletion canceled![/yellow]")
+        
+        choices=['y', 'n']
+        delete_confirmation = user_input("Are you sure you want to delete this item? (y/n)", choices, True)
+        try:
+            if delete_confirmation.lower() == 'y':
+                # Remove the item from the data list
+                inventory_sheet = SHEET.worksheet('inventory_sheet')
+                inventory_sheet.delete_rows(index_to_delete + 1)
+                
+                console.print("[green]Item deleted successfully![/green]\n")
+            else:
+                console.print("[yellow]Deletion canceled![/yellow]")
+                operations_menu()
+        except:
+            console.print("[bold red]Please select one of the available options\n")
+    
         break  # Exit the loop after handling the deletion
     
     # Refetch data and continue with search loop
     data = get_data()
-    search_inventory(data, True)
 
         
 
@@ -217,7 +267,6 @@ def main():
     """Run all program functions
     """
     os.system("clear")
-    console = Console()
     
     start_view()
     
@@ -227,21 +276,10 @@ def main():
             data = get_data()
             display_items(data, "Inventory Items")
         elif choice == "2":
-            data = get_data()
-            search_inventory(data)
-        # elif choice == "3":
-        #     edit_item(inventory)
-        # elif choice == "4":
-        #     update_item(data)
-        # elif choice == "5":
-        #     delete_item(inventory)
-        # elif choice == "6":
-        #     display_help()
-        elif choice == "7":
+            operations_menu()
+        elif choice == "0":
             print("Quitting the application...")
             sys.exit()
-        else:
-            console.print("\n[red]Invalid operation. Please select again.\n")
     
 
 main()
