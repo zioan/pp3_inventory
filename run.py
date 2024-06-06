@@ -126,7 +126,7 @@ def main_menu():
     console.print(menu)
     
     choices = ["1", "2", "0"]
-    input = user_input("Choose an operation: ", choices, True)
+    input = user_input("Choose an operation: ", choices)
     
     return input
 
@@ -146,7 +146,7 @@ def operations_menu():
         console.print(menu)
 
         choices = ["1", "2", "3", "4", "0"]
-        input = user_input("Choose an operation: ", choices, True)
+        input = user_input("Choose an operation: ", choices)
 
         if input == "1":
             print("Add functionality not implemented yet...")
@@ -160,18 +160,19 @@ def operations_menu():
             return  # Return to the previous menu
     
 
-def user_input(label, available_options, strict_input):
+def user_input(label, available_options):
     console = Console()
-    user_prompt = input(label).strip()
     
-    if strict_input:
-        if user_prompt not in available_options:
-            console.print("[bold red]Please select one of the available options\n")
-            user_prompt = input(label)
-        else:
+    while True:
+        user_prompt = input(label).strip()
+        
+        if available_options:  # If available_options is not empty
+            if user_prompt not in available_options:
+                console.print("[bold red]Please select one of the available options\n")
+            else:
+                return user_prompt
+        else:  # If available_options is empty
             return user_prompt
-    else:
-        return user_prompt
 
 
 def search_inventory():
@@ -188,7 +189,7 @@ def search_inventory():
         menu = " | ".join(options)
         console.print(menu)
 
-        search_term = user_input("Enter the name of the item to search (or other operation): ", "", False)
+        search_term = user_input("Enter the name of the item to search (or other operation): ", "")
 
         if search_term == "0":
             print("Going back...")
@@ -218,7 +219,7 @@ def delete_item():
     max_index = len(data)
 
     while True:
-        index_to_delete = user_input(f"Enter the index to delete an item (1 - {max_index}), or '0' to cancel: ", "", False)
+        index_to_delete = user_input(f"Enter the index to delete an item (1 - {max_index}), or '0' to cancel: ", "")
 
         # Abort deletion and return to operations menu
         if index_to_delete == '0':
@@ -240,7 +241,7 @@ def delete_item():
         console.print("\n[bold red]Item to delete:")
         display_items([item_to_delete], "")
 
-        delete_confirmation = user_input("Are you sure you want to delete this item? (y/n)", ['y', 'n'], True)
+        delete_confirmation = user_input("Are you sure you want to delete this item? (y/n)", ['y', 'n'])
         if delete_confirmation.lower() == 'y':
             try:
                 # Remove the item from the data list
