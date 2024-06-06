@@ -133,32 +133,31 @@ def main_menu():
 
 def operations_menu():
     console = Console()
-    console.print("\n[blue bold underline]Operation selector")
-    options = [
-        "[green][bold]1.[/green][/bold] Add",
-        "[green][bold]2.[/green][/bold] Update",
-        "[green][bold]3.[/green][/bold] Delete",
-        "[green][bold]4.[/green][/bold] Search",
-        "[green][bold]0.[/green][/bold] Back",
-    ]
-    menu = " | ".join(options)
-    console.print(menu)    
-    
-    choices = ["1", "2", "3", "4", "0"]
-    input = user_input("Choose an operation: ", choices, True)
-    
-    if input == "1":
-        print("Add functionality not implemented yet...")
-    elif input == "2":
-        print("Update not implemented yet...")
-    elif input == "3":
-        delete_item()
-    elif input == "4":
-        search_inventory()
-    elif input == "0":
-        main_menu() # return to previous menu
-    else:
-        operations_menu() # If no valid choice, than operations_menu run in a loop
+    while True:
+        console.print("\n[blue bold underline]Operation selector")
+        options = [
+            "[green][bold]1.[/green][/bold] Add",
+            "[green][bold]2.[/green][/bold] Update",
+            "[green][bold]3.[/green][/bold] Delete",
+            "[green][bold]4.[/green][/bold] Search",
+            "[green][bold]0.[/green][/bold] Back",
+        ]
+        menu = " | ".join(options)
+        console.print(menu)
+
+        choices = ["1", "2", "3", "4", "0"]
+        input = user_input("Choose an operation: ", choices, True)
+
+        if input == "1":
+            print("Add functionality not implemented yet...")
+        elif input == "2":
+            print("Update not implemented yet...")
+        elif input == "3":
+            delete_item()
+        elif input == "4":
+            search_inventory()
+        elif input == "0":
+            return  # Return to the previous menu
     
 
 def user_input(label, available_options, strict_input):
@@ -178,41 +177,39 @@ def user_input(label, available_options, strict_input):
 def search_inventory():
     console = Console()
     data = get_data()
-    
-    console.print("\n[blue bold underline]Search Inventory")
-    options = [
-        "[green][bold]1.[/green][/bold] Update",
-        "[green][bold]2.[/green][/bold] Delete",
-        "[green][bold]0.[/green][/bold] Back",
-    ]
-    menu = " | ".join(options)
-    console.print(menu) 
-    
-    search_term = user_input("Enter the name of the item to search (or other operation): ", "", False)
-    
-    if search_term == "0":
-        print("Going back...")
-        return  # Return to the main menu
-    elif search_term == "1":
-        print("Update not implemented yet...")
-        search_inventory()
-        return
-    elif search_term == "2":
-        delete_item()
-        return
-    
-    found_items = [item for item in data if search_term.lower() in item["name"].lower()]
-    filtered_data = []
-    if found_items:       
-        # Render results and continue search loop
-        for item in found_items:
-            filtered_data.append(item)
-        table_title = f"Search results for {search_term}" if search_term else "Inventory Items"
-        display_items(filtered_data, table_title)
-        search_inventory() # Keep search active until user return to main menu
-    else:
-        console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
-        search_inventory() # Keep search active until user return to main menu
+
+    while True:
+        console.print("\n[blue bold underline]Search Inventory")
+        options = [
+            "[green][bold]1.[/green][/bold] Update",
+            "[green][bold]2.[/green][/bold] Delete",
+            "[green][bold]0.[/green][/bold] Back",
+        ]
+        menu = " | ".join(options)
+        console.print(menu)
+
+        search_term = user_input("Enter the name of the item to search (or other operation): ", "", False)
+
+        if search_term == "0":
+            print("Going back...")
+            return  # Return to the operations menu
+        elif search_term == "1":
+            print("Update not implemented yet...")
+            continue  # Continue the search loop
+        elif search_term == "2":
+            delete_item()
+            continue  # Continue the search loop
+
+        found_items = [item for item in data if search_term.lower() in item["name"].lower()]
+        filtered_data = []
+        if found_items:
+            # Render results and continue search loop
+            for item in found_items:
+                filtered_data.append(item)
+            table_title = f"Search results for {search_term}" if search_term else "Inventory Items"
+            display_items(filtered_data, table_title)
+        else:
+            console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
 
 
 def delete_item():
