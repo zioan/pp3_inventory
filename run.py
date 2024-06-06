@@ -163,9 +163,22 @@ def operations_menu():
             search_inventory()
         elif input == "0":
             return  # Return to the previous menu
-    
-
-def user_input(label, available_options):
+        
+        
+def is_data_valid(value, expected_type):
+    if expected_type == "text":
+        # Check if it's a string and not a numeric string
+        return isinstance(value, str) and not value.isdigit()
+    elif expected_type == "positive number":
+        try:
+            # Check if it's a number and a positive number
+            number = float(value)
+            return number > 0
+        except ValueError:
+            return False
+    else:
+        # If the expected_type is neither "string" nor "number", return False
+        return False
     console = Console()
     
     while True:
