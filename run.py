@@ -21,10 +21,15 @@ SHEET = GSPREAD_CLIENT.open('Inventory')
 
 
 def get_data():
-    inventory_sheet = SHEET.worksheet('inventory_sheet')
-    inventory_data = inventory_sheet.get_all_values()
-    data = convert_to_dict(inventory_data)
-    return data
+    console = Console()
+    try:
+        inventory_sheet = SHEET.worksheet('inventory_sheet')
+        inventory_data = inventory_sheet.get_all_values()
+        data = convert_to_dict(inventory_data)
+        return data
+    except Exception as e:
+        console.print(f"[bold red]Failed to retrieve Inventory data: {str(e)}\n")
+
 
 def convert_to_dict(data):
     """Convert data from Google Sheets API into a list of dictionaries.
