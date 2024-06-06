@@ -1,5 +1,5 @@
 from rich.console import Console
-from modules.user_input import user_input
+from modules.input_validation import user_input
 from modules.inventory_management import add_new_item, delete_item, search_inventory
 
 

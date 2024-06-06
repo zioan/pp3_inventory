@@ -1,7 +1,7 @@
 from rich.console import Console
 from rich.table import Table
 from modules.google_sheets import SHEET, get_data
-from modules.user_input import user_input
+from modules.input_validation import user_input
 from modules.helpers import is_operation_canceled
 
 
