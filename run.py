@@ -242,14 +242,20 @@ def add_new_item():
     table_title = "Item to save:"
     display_items(item_to_save, table_title)
     
-    try:
-        # Add the new item to the Google Sheet
-        inventory_sheet = SHEET.worksheet('inventory_sheet')
-        item_values = (item_name, item_type, item_quantity, item_unit)
-        inventory_sheet.append_row(item_values)
-        console.print("[green]Item saved successfully!\n")
-    except Exception as e:
-        console.print(f"[bold red]Failed to save item: {str(e)}\n")
+    user_confirmation = user_input("Do you want to save this item? (y/n)", ['y', 'n'])
+    if user_confirmation.lower() == 'y':
+        try:
+            # Add the new item to the Google Sheet
+            inventory_sheet = SHEET.worksheet('inventory_sheet')
+            item_values = (item_name, item_type, item_quantity, item_unit)
+            inventory_sheet.append_row(item_values)
+            
+            console.print("[green]Item saved successfully!\n")
+        except Exception as e:
+            console.print(f"[bold red]Failed to save item: {str(e)}\n")
+    elif user_confirmation.lower() == 'n':
+        console.print("[yellow]Operation aborted!\n")
+        return  # Exit the function after aborting the operation
 
 
 def delete_item():
