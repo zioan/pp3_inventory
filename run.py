@@ -179,12 +179,32 @@ def is_data_valid(value, expected_type):
     else:
         # If the expected_type is neither "string" nor "number", return False
         return False
+    
+
+def is_operation_canceled(user_input, cancel_value):
+    console = Console()
+    if user_input.lower() == cancel_value:
+        console.print("[yellow]Operation aborted!\n")
+        return True
+    return False
+
+
+def user_input(label, available_options=None, description=None, type=None):
     console = Console()
     
     while True:
         user_prompt = input(label).strip()
         
-        if available_options:  # If available_options is not empty
+        if user_prompt == "" and description:
+            console.print(f"\n[red bold]{description} cannot be empty.")
+        elif len(user_prompt) > 20:
+            console.print(f"[red bold]You cannot enter more than 20 characters")
+        elif type:
+            if is_data_valid(user_prompt, type):
+                return user_prompt
+            else:
+                console.print(f"\n[red]The value must be [bold]{type}[/bold][/red]")
+        elif available_options:  # If available_options is not empty
             if user_prompt not in available_options:
                 console.print("[bold red]Please select one of the available options\n")
             else:
