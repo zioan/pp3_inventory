@@ -203,7 +203,7 @@ def user_input(label, available_options=None, description=None, type=None):
             if is_data_valid(user_prompt, type):
                 return user_prompt
             else:
-                console.print(f"\n[red]The value must be [bold]{type}[/bold][/red]")
+                console.print(f"\n[red bold]The value must be {type}")
         elif available_options:  # If available_options is not empty
             if user_prompt not in available_options:
                 console.print("[bold red]Please select one of the available options\n")
@@ -250,17 +250,34 @@ def search_inventory():
         else:
             console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
             
-            
+
 def add_new_item():
     console = Console()
     
-    console.print(f"[blue solid]Add new item")
-    console.print(f"[blue]Fill the fields, or '0' to cancel at any time:")
+    console.print("\n[blue bold underline]Add new item")
+    console.print(f"[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
     
-    item_name = user_input(f"Enter item name: ", "")
-    item_type = user_input(f"Enter item type: ", "")
-    item_quantity = user_input(f"Enter item quantity: ", "")
-    item_unit = user_input(f"Enter item measurement unit: ", "")
+    # The parameters accepted by user_input are:
+    #  1. a label to display the desired input
+    #  2. a list of choices (if apply, optional parameter)
+    #  3. a string to be displayed as warning message if the input is submitted empty (optional parameter)
+    #  4. the type of data that is accepted (text/number) also displayed as string in validation (optional parameter)
+    item_name = user_input(f"Enter item name: ", "", "Item name", "text")
+    if is_operation_canceled(item_name, "c"):
+        return
+    
+    item_type = user_input(f"Enter item type: ", "", "Item type", "text")
+    if is_operation_canceled(item_type, "c"):
+        return
+    
+    item_quantity = user_input(f"Enter item quantity: ", "", "Item quantity", "positive number")
+    if is_operation_canceled(item_quantity, "c"):
+        return
+    
+    item_unit = user_input(f"Enter item measurement unit: ", "", "Item unit", "text")
+    if is_operation_canceled(item_unit, "c"):
+        return
+    
     
     data = get_data()
     
