@@ -219,14 +219,15 @@ def delete_item():
     console = Console()
     data = get_data()
     max_index = len(data)
-    
+
     while True:
         index_to_delete = user_input(f"Enter the index to delete an item (1 - {max_index}), or '0' to cancel: ", "", False)
-        
+
         # Abort deletion and return to operations menu
         if index_to_delete == '0':
             operations_menu()
-        
+            return  # Exit the function to prevent further execution
+
         try:
             index_to_delete = int(index_to_delete)
             if index_to_delete not in range(1, max_index + 1):
@@ -235,30 +236,31 @@ def delete_item():
         except ValueError:
             console.print(f"[red]Invalid input '{index_to_delete}'. Please enter a number.[/red]")
             continue  # Prompt again
-        
+
         # Delete
         item_to_delete = data[index_to_delete - 1]  # Adjust for 0-based indexing
-        
+
+        console.print("\n[bold red]Item to delete:")
         display_items([item_to_delete], "")
-        
-        choices=['y', 'n']
-        delete_confirmation = user_input("Are you sure you want to delete this item? (y/n)", choices, True)
-        try:
-            if delete_confirmation.lower() == 'y':
+
+        delete_confirmation = user_input("Are you sure you want to delete this item? (y/n)", ['y', 'n'], True)
+        if delete_confirmation.lower() == 'y':
+            try:
                 # Remove the item from the data list
                 inventory_sheet = SHEET.worksheet('inventory_sheet')
                 inventory_sheet.delete_rows(index_to_delete + 1)
-                
+
                 console.print("[green]Item deleted successfully![/green]\n")
-            else:
-                console.print("[yellow]Deletion canceled![/yellow]")
-                operations_menu()
-        except:
-            console.print("[bold red]Please select one of the available options\n")
-    
+            except Exception as e:
+                console.print(f"[bold red]Error deleting item: {str(e)}[/bold red]\n")
+        else:
+            console.print("[yellow]Deletion canceled![/yellow]")
+            operations_menu()
+            return  # Exit the function after cancellation
+
         break  # Exit the loop after handling the deletion
-    
-    # Refetch data and continue with search loop
+
+    # Refetch data and continue with search loop or other necessary operations
     data = get_data()
 
         
