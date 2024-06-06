@@ -154,7 +154,7 @@ def operations_menu():
         input = user_input("Choose an operation: ", choices)
 
         if input == "1":
-            print("Add functionality not implemented yet...")
+            add_new_item()
         elif input == "2":
             print("Update not implemented yet...")
         elif input == "3":
@@ -216,6 +216,44 @@ def search_inventory():
             display_items(filtered_data, table_title)
         else:
             console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
+            
+            
+def add_new_item():
+    console = Console()
+    
+    console.print(f"[blue solid]Add new item")
+    console.print(f"[blue]Fill the fields, or '0' to cancel at any time:")
+    
+    item_name = user_input(f"Enter item name: ", "")
+    item_type = user_input(f"Enter item type: ", "")
+    item_quantity = user_input(f"Enter item quantity: ", "")
+    item_unit = user_input(f"Enter item measurement unit: ", "")
+    
+    item_to_save = [{
+        "name": item_name,
+        "type": item_type,
+        "quantity": item_quantity,
+        "unit": item_unit
+    }]
+    
+    data = get_data()
+    
+    item_to_display_in_table = [{
+        "index": len(data) + 1,
+        **item_to_save[0] # Unpack the existing item_to_save to add index for the table
+    }]
+    
+    table_title = "Item to save:"
+    display_items(item_to_display_in_table, table_title)
+    
+    try:
+        # Add the new item to the Google Sheet
+        inventory_sheet = SHEET.worksheet('inventory_sheet')
+        item_values = list(item_to_save[0].values()) # Convert the dictionary to a list of values
+        inventory_sheet.append_row(item_values)
+        console.print("[green]Item saved successfully!\n")
+    except Exception as e:
+        console.print(f"[bold red]Failed to save item: {str(e)}\n")
 
 
 def delete_item():
