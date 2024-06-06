@@ -229,27 +229,23 @@ def add_new_item():
     item_quantity = user_input(f"Enter item quantity: ", "")
     item_unit = user_input(f"Enter item measurement unit: ", "")
     
+    data = get_data()
+    
     item_to_save = [{
+        "index": len(data) + 1,
         "name": item_name,
         "type": item_type,
         "quantity": item_quantity,
         "unit": item_unit
     }]
     
-    data = get_data()
-    
-    item_to_display_in_table = [{
-        "index": len(data) + 1,
-        **item_to_save[0] # Unpack the existing item_to_save to add index for the table
-    }]
-    
     table_title = "Item to save:"
-    display_items(item_to_display_in_table, table_title)
+    display_items(item_to_save, table_title)
     
     try:
         # Add the new item to the Google Sheet
         inventory_sheet = SHEET.worksheet('inventory_sheet')
-        item_values = list(item_to_save[0].values()) # Convert the dictionary to a list of values
+        item_values = (item_name, item_type, item_quantity, item_unit)
         inventory_sheet.append_row(item_values)
         console.print("[green]Item saved successfully!\n")
     except Exception as e:
