@@ -1,24 +1,16 @@
+import sys
+import os
 from rich.console import Console
+from art import text2art
 from modules.menu import main_menu, operations_menu
 from modules.inventory_management import display_items
 from modules.google_sheets import get_data
-import sys
-import os
 
 
 def start_view():
     console = Console()
-    ascii_art = """
-'||'                                      .                            
- ||  .. ...   .... ...   ....  .. ...   .||.    ...   ... ..  .... ... 
- ||   ||  ||   '|.  |  .|...||  ||  ||   ||   .|  '|.  ||' ''  '|.  |  
- ||   ||  ||    '|.|   ||       ||  ||   ||   ||   ||  ||       '|.|   
-.||. .||. ||.    '|     '|...' .||. ||.  '|.'  '|..|' .||.       '|    
-                                                              .. |     
-                                                               ''
-"""
-
-    console.print(f"[green]{ascii_art}[/green]")
+    ascii_art = text2art("Inventory")
+    console.print(f"[green bold]{ascii_art}[/green bold]")
 
        
 
