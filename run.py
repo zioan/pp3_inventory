@@ -32,5 +32,7 @@ def main():
             sys.exit()
     
 
-main()
+# Run the main function only if this script is executed directly
+if __name__ == "__main__":
+    main()
     
