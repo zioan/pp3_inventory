@@ -42,10 +42,12 @@ def is_data_valid(value, expected_type):
             return number > 0
         except ValueError:
             return False
+    elif expected_type == "empty":
+        return True
     else:
         # If the expected_type is neither "string" nor "number", return False
         return False
-    
+
 
 def is_operation_canceled(user_input, cancel_value):
     console = Console()
