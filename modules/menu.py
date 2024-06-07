@@ -1,6 +1,6 @@
 from rich.console import Console
 from modules.input_validation import user_input
-from modules.inventory_management import add_new_item, delete_item, search_inventory
+from modules.inventory_management import add_new_item, update_item, delete_item, search_inventory
 
 
 def main_menu():
@@ -43,7 +43,7 @@ def operations_menu():
       if input == "1":
           add_new_item()
       elif input == "2":
-          print("Update not implemented yet...")
+          update_item()
       elif input == "3":
           delete_item()
       elif input == "4":

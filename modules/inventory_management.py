@@ -193,3 +193,86 @@ def delete_item():
 
     # Refetch data and continue with search loop or other necessary operations
     data = get_data()
+
+
+def update_item():
+    console = Console()
+    data = get_data()
+    max_index = len(data)
+
+    while True:
+        index_to_update = user_input(f"Enter the index to update an item (1 - {max_index}), or '0' to cancel: ", "")
+
+        # Abort update and return to operations menu
+        if index_to_update == '0':
+            console.print("[yellow]Operation aborted!\n")
+            return  # Exit the function to prevent further execution
+
+        try:
+            index_to_update = int(index_to_update)
+            if index_to_update not in range(1, max_index + 1):
+                console.print(f"[red]Invalid index '{index_to_update}'. Index should be between 1 and {max_index}.[/red]")
+                continue  # Prompt again
+        except ValueError:
+            console.print(f"[red]Invalid input '{index_to_update}'. Please enter a number.[/red]")
+            continue  # Prompt again
+
+        # Display current item
+        item_to_update = data[index_to_update - 1]  # Adjust for 0-based indexing
+        console.print("\n[bold blue]Item to update:")
+        display_items([item_to_update], "")
+
+        # Get updated item details
+        console.print(f"[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
+        item_name = user_input(f"Enter new item name (leave blank to keep '{item_to_update['name']}'): ", "", "Item name", "text")
+        if is_operation_canceled(item_name, "c"):
+            return
+        item_name = item_name or item_to_update['name']  # Keep current value if blank
+
+        item_type = user_input(f"Enter new item type (leave blank to keep '{item_to_update['type']}'): ", "", "Item type", "text")
+        if is_operation_canceled(item_type, "c"):
+            return
+        item_type = item_type or item_to_update['type']  # Keep current value if blank
+
+        item_quantity = user_input(f"Enter new item quantity (leave blank to keep '{item_to_update['quantity']}'): ", "", "Item quantity", "positive number")
+        if is_operation_canceled(item_quantity, "c"):
+            return
+        item_quantity = item_quantity or item_to_update['quantity']  # Keep current value if blank
+
+        item_unit = user_input(f"Enter new item measurement unit (leave blank to keep '{item_to_update['unit']}'): ", "", "Item unit", "text")
+        if is_operation_canceled(item_unit, "c"):
+            return
+        item_unit = item_unit or item_to_update['unit']  # Keep current value if blank
+        
+        updated_item = [{
+            "index": index_to_update,
+            "name": item_name,
+            "type": item_type,
+            "quantity": item_quantity,
+            "unit": item_unit
+        }]
+        
+        table_title = "The new item updated:"
+        display_items(updated_item, table_title)
+        
+        user_confirmation = user_input("Do you want to save this item? (y/n)", ['y', 'n'])
+        if user_confirmation.lower() == 'y':
+            try:
+                # Update the item in the Google Sheet
+                inventory_sheet = SHEET.worksheet('inventory_sheet')
+                inventory_sheet.update_cell(index_to_update + 1, 1, item_name)  # Update item name
+                inventory_sheet.update_cell(index_to_update + 1, 2, item_type)  # Update item type
+                inventory_sheet.update_cell(index_to_update + 1, 3, item_quantity)  # Update item quantity
+                inventory_sheet.update_cell(index_to_update + 1, 4, item_unit)  # Update item unit
+
+                console.print("[green]Item updated successfully![/green]\n")
+            except Exception as e:
+                console.print(f"[bold red]Error updating item: {str(e)}[/bold red]\n")
+        elif user_confirmation.lower() == 'n':
+            console.print("[yellow]Operation aborted!\n")
+            return  # Exit the function after aborting the operation
+
+        break  # Exit the loop after handling the update
+
+    # Refetch data and continue with search loop or other necessary operations
+    data = get_data()
