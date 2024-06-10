@@ -27,3 +27,37 @@ def get_data():
     except Exception as e:
         console.print(f"[bold red]Failed to retrieve Inventory data: {str(e)}\n")
 
+
+def new_item_handler(new_item):
+    console = Console()
+    try:
+        inventory_sheet = SHEET.worksheet('inventory_sheet')
+        inventory_sheet.append_row(new_item)
+        console.print("[green]Item saved successfully!\n")
+    except Exception as e:
+        console.print(f"[bold red]Failed to save item: {str(e)}\n")
+
+
+def delete_handler(index):
+    console = Console()
+    try:
+        inventory_sheet = SHEET.worksheet('inventory_sheet')
+        inventory_sheet.delete_rows(index + 1)  # Google Sheets is 1-based index
+        console.print("[green]Item deleted successfully![/green]\n")
+    except Exception as e:
+        console.print(f"[bold red]Error deleting item: {str(e)}[/bold red]\n")
+
+
+def update_handler(index_to_update, item):
+    console = Console()
+    try:
+        # Update the item in the Google Sheet
+        inventory_sheet = SHEET.worksheet('inventory_sheet')
+        inventory_sheet.update_cell(index_to_update + 1, 1, item["name"])  # Update item name
+        inventory_sheet.update_cell(index_to_update + 1, 2, item["type"])  # Update item type
+        inventory_sheet.update_cell(index_to_update + 1, 3, item["quantity"])  # Update item quantity
+        inventory_sheet.update_cell(index_to_update + 1, 4, item["unit"])  # Update item unit
+
+        console.print("[green]Item updated successfully![/green]\n")
+    except Exception as e:
+        console.print(f"[bold red]Error updating item: {str(e)}[/bold red]\n")

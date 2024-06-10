@@ -1,6 +1,6 @@
 from rich.console import Console
 from rich.table import Table
-from modules.google_sheets import SHEET, get_data
+from modules.google_sheets import get_data, new_item_handler, delete_handler, update_handler
 from modules.input_validation import user_input
 from modules.helpers import is_operation_canceled
 
@@ -127,19 +127,12 @@ def add_new_item():
     
     user_confirmation = user_input("Do you want to save this item? (y/n)", available_options=['y', 'n'])
     if user_confirmation.lower() == 'y':
-        try:
-            # Add the new item to the Google Sheet
-            inventory_sheet = SHEET.worksheet('inventory_sheet')
-            item_values = (item_name, item_type, item_quantity, item_unit)
-            inventory_sheet.append_row(item_values)
-            
-            console.print("[green]Item saved successfully!\n")
-        except Exception as e:
-            console.print(f"[bold red]Failed to save item: {str(e)}\n")
+        item_values = (item_name, item_type, item_quantity, item_unit)
+        new_item_handler(item_values)
     elif user_confirmation.lower() == 'n':
         console.print("[yellow]Operation aborted!\n")
         return  # Exit the function after aborting the operation
-    
+
 
 def delete_item():
     # Prevent circular dependency error 
@@ -177,14 +170,8 @@ def delete_item():
 
         delete_confirmation = user_input("Are you sure you want to delete this item? (y/n)", ['y', 'n'])
         if delete_confirmation.lower() == 'y':
-            try:
                 # Remove the item from the data list
-                inventory_sheet = SHEET.worksheet('inventory_sheet')
-                inventory_sheet.delete_rows(index_to_delete + 1)
-
-                console.print("[green]Item deleted successfully![/green]\n")
-            except Exception as e:
-                console.print(f"[bold red]Error deleting item: {str(e)}[/bold red]\n")
+                delete_handler(index_to_delete)
         else:
             console.print("[yellow]Deletion canceled![/yellow]")
             operations_menu()
@@ -260,17 +247,7 @@ def update_item():
         
         user_confirmation = user_input("Do you want to save this item? (y/n)", available_options=['y', 'n'])
         if user_confirmation.lower() == 'y':
-            try:
-                # Update the item in the Google Sheet
-                inventory_sheet = SHEET.worksheet('inventory_sheet')
-                inventory_sheet.update_cell(index_to_update + 1, 1, item_name)  # Update item name
-                inventory_sheet.update_cell(index_to_update + 1, 2, item_type)  # Update item type
-                inventory_sheet.update_cell(index_to_update + 1, 3, item_quantity)  # Update item quantity
-                inventory_sheet.update_cell(index_to_update + 1, 4, item_unit)  # Update item unit
-
-                console.print("[green]Item updated successfully![/green]\n")
-            except Exception as e:
-                console.print(f"[bold red]Error updating item: {str(e)}[/bold red]\n")
+            update_handler(index_to_update, updated_item[0])
         elif user_confirmation.lower() == 'n':
             console.print("[yellow]Operation aborted!\n")
             return  # Exit the function after aborting the operation
