@@ -1,7 +1,7 @@
 from rich.console import Console
 
 
-def user_input(label, available_options=None, description=None, expected_type=None, allow_empty=False):
+def user_input(label, available_options=None, expected_type=None, allow_empty=False):
     console = Console()
     
     while True:
@@ -14,17 +14,17 @@ def user_input(label, available_options=None, description=None, expected_type=No
         
         # Check if input is not empty when empty strings are not allowed
         if not allow_empty and user_prompt == "":
-            console.print(f"\n[red bold]{description} cannot be empty.")
+            console.print(f"\n[red bold]This field cannot be empty.")
             continue  # Skip to the next iteration of the loop to prompt the user again
         
         # Validate input type
         if expected_type and user_prompt and not is_data_valid(user_prompt, expected_type):
-            console.print(f"[red bold]The value must be {expected_type}")
+            console.print(f"\n[red bold]The value must be {expected_type}")
             continue  # Skip to the next iteration of the loop to prompt the user again
         
         # Validate against available options
         if available_options and user_prompt not in available_options:
-            console.print("[bold red]Please select one of the available options\n")
+            console.print("\n[bold red]Please select one of the available options")
             continue  # Skip to the next iteration of the loop to prompt the user again
         
         # If all checks pass, return the valid input
