@@ -55,22 +55,26 @@ def search_inventory():
     while True:
         console.print("\n[blue bold underline]Search Inventory")
         options = [
-            "[green][bold]1.[/green][/bold] Update",
-            "[green][bold]2.[/green][/bold] Delete",
-            "[green][bold]0.[/green][/bold] Back",
+            "[green][bold]1.[/green][/bold] Add",
+            "[green][bold]2.[/green][/bold] Update",
+            "[green][bold]3.[/green][/bold] Delete",
+            "[green][bold]c.[/green][/bold] Cancel",
         ]
         menu = " | ".join(options)
         console.print(menu)
 
-        search_term = user_input("Enter the name of the item to search (or other operation): ", "")
+        search_term = user_input("Enter the name of the item to search (or other operation): ")
 
-        if search_term == "0":
-            print("Going back...")
-            return  # Return to the operations menu
+        # Abort search operation and return to operations menu
+        if is_operation_canceled(search_term, "c"):
+            return # Exit the function to prevent further execution
         elif search_term == "1":
-            print("Update not implemented yet...")
+            add_new_item()
             continue  # Continue the search loop
         elif search_term == "2":
+            update_item()
+            continue  # Continue the search loop
+        elif search_term == "3":
             delete_item()
             continue  # Continue the search loop
 
