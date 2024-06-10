@@ -2,7 +2,7 @@ from rich.console import Console
 from rich.table import Table
 from modules.google_sheets import get_data, new_item_handler, delete_handler, update_handler
 from modules.input_validation import user_input
-from modules.helpers import is_operation_canceled
+from modules.helpers import is_operation_canceled, get_valid_index
 
 
 def display_items(data, table_title):
@@ -140,27 +140,14 @@ def delete_item():
     
     console = Console()
     data = get_data()
-    max_index = len(data)
 
     console.print("\n[blue bold underline]Delete item")
     console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
     
     while True:
-        
-        index_to_delete = user_input(f"Enter the index to delete an item (1 - {max_index}): ")
-
-        # Abort deletion and return to operations menu
-        if is_operation_canceled(index_to_delete, "c"):
-            return # Exit the function to prevent further execution
-
-        try:
-            index_to_delete = int(index_to_delete)
-            if index_to_delete not in range(1, max_index + 1):
-                console.print(f"[red]Invalid index '{index_to_delete}'. Index should be between 1 and {max_index}.[/red]")
-                continue  # Prompt again
-        except ValueError:
-            console.print(f"[red]Invalid input '{index_to_delete}'. Please enter a number.[/red]")
-            continue  # Prompt again
+        index_to_delete = get_valid_index(data, "Enter the index to delete an item")
+        if index_to_delete is None:
+            return
 
         # Delete
         item_to_delete = data[index_to_delete - 1]  # Adjust for 0-based indexing

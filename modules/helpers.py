@@ -1,4 +1,5 @@
 from rich.console import Console
+from modules.input_validation import user_input
 
 
 def convert_to_dict(data):
@@ -37,3 +38,26 @@ def is_operation_canceled(user_input, cancel_value):
         console.print("[yellow]Operation aborted!\n")
         return True
     return False
+
+
+def get_valid_index(data, prompt):
+    console = Console()
+    max_index = len(data)
+    
+    while True:
+        index = user_input(f"{prompt} (1 - {max_index}): ")
+        
+        # Abort operation if user cancels
+        if is_operation_canceled(index, "c"):
+            return None
+        
+        try:
+            index = int(index)
+            if index not in range(1, max_index + 1):
+                console.print(f"[red]Invalid index '{index}'. Index should be between 1 and {max_index}.[/red]")
+                continue
+        except ValueError:
+            console.print(f"[red]Invalid input '{index}'. Please enter a number.[/red]")
+            continue
+        
+        return index
