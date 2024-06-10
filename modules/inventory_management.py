@@ -173,27 +173,15 @@ def delete_item():
 def update_item():
     console = Console()
     data = get_data()
-    max_index = len(data)
 
     console.print("\n[blue bold underline]Update item")
     console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
     
     while True:
         
-        index_to_update = user_input(f"Enter the index to update an item (1 - {max_index}): ")
-        
-        # Abort update and return to operations menu
-        if is_operation_canceled(index_to_update, "c"):
-            return # Exit the function to prevent further execution
-
-        try:
-            index_to_update = int(index_to_update)
-            if index_to_update not in range(1, max_index + 1):
-                console.print(f"[red]Invalid index '{index_to_update}'. Index should be between 1 and {max_index}.[/red]")
-                continue  # Prompt again
-        except ValueError:
-            console.print(f"[red]Invalid input '{index_to_update}'. Please enter a number.[/red]")
-            continue  # Prompt again
+        index_to_update = get_valid_index(data, "Enter the index to update an item")
+        if index_to_update is None:
+            return
 
         # Display current item
         item_to_update = data[index_to_update - 1]  # Adjust for 0-based indexing
