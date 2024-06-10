@@ -18,7 +18,7 @@ def user_input(label, available_options=None, description=None, expected_type=No
             continue  # Skip to the next iteration of the loop to prompt the user again
         
         # Validate input type
-        if expected_type and not is_data_valid(user_prompt, expected_type):
+        if expected_type and user_prompt and not is_data_valid(user_prompt, expected_type):
             console.print(f"[red bold]The value must be {expected_type}")
             continue  # Skip to the next iteration of the loop to prompt the user again
         
