@@ -149,13 +149,16 @@ def delete_item():
     data = get_data()
     max_index = len(data)
 
+    console.print("\n[blue bold underline]Delete item")
+    console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
+    
     while True:
-        index_to_delete = user_input(f"Enter the index to delete an item (1 - {max_index}), or '0' to cancel: ", "")
+        
+        index_to_delete = user_input(f"Enter the index to delete an item (1 - {max_index}): ")
 
         # Abort deletion and return to operations menu
-        if index_to_delete == '0':
-            operations_menu()
-            return  # Exit the function to prevent further execution
+        if is_operation_canceled(index_to_delete, "c"):
+            return # Exit the function to prevent further execution
 
         try:
             index_to_delete = int(index_to_delete)
