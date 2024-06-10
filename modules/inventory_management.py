@@ -201,13 +201,16 @@ def update_item():
     data = get_data()
     max_index = len(data)
 
+    console.print("\n[blue bold underline]Update item")
+    console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
+    
     while True:
-        index_to_update = user_input(f"Enter the index to update an item (1 - {max_index}), or '0' to cancel: ")
-
+        
+        index_to_update = user_input(f"Enter the index to update an item (1 - {max_index}): ")
+        
         # Abort update and return to operations menu
-        if index_to_update == '0':
-            console.print("[yellow]Operation aborted!\n")
-            return  # Exit the function to prevent further execution
+        if is_operation_canceled(index_to_update, "c"):
+            return # Exit the function to prevent further execution
 
         try:
             index_to_update = int(index_to_update)
