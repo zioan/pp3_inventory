@@ -84,35 +84,29 @@ def search_inventory():
             display_items(filtered_data, table_title)
         else:
             console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
-            
+
 
 def add_new_item():
     console = Console()
     
     console.print("\n[blue bold underline]Add new item")
-    console.print(f"[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
+    console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
     
-    # The parameters accepted by user_input are:
-    #  1. a label to display the desired input
-    #  2. a list of choices (if apply, optional parameter)
-    #  3. a string to be displayed as warning message if the input is submitted empty (optional parameter)
-    #  4. the type of data that is accepted (text/number) also displayed as string in validation (optional parameter)
-    item_name = user_input(f"Enter item name: ", "", "Item name", "text")
+    item_name = user_input("Enter item name: ", expected_type="text")
     if is_operation_canceled(item_name, "c"):
         return
     
-    item_type = user_input(f"Enter item type: ", "", "Item type", "text")
+    item_type = user_input("Enter item type: ", expected_type="text")
     if is_operation_canceled(item_type, "c"):
         return
     
-    item_quantity = user_input(f"Enter item quantity: ", "", "Item quantity", "positive number")
+    item_quantity = user_input("Enter item quantity: ", expected_type="positive number")
     if is_operation_canceled(item_quantity, "c"):
         return
     
-    item_unit = user_input(f"Enter item measurement unit: ", "", "Item unit", "text")
+    item_unit = user_input("Enter item measurement unit: ", expected_type="text")
     if is_operation_canceled(item_unit, "c"):
         return
-    
     
     data = get_data()
     
@@ -127,7 +121,7 @@ def add_new_item():
     table_title = "Item to save:"
     display_items(item_to_save, table_title)
     
-    user_confirmation = user_input("Do you want to save this item? (y/n)", ['y', 'n'])
+    user_confirmation = user_input("Do you want to save this item? (y/n)", available_options=['y', 'n'])
     if user_confirmation.lower() == 'y':
         try:
             # Add the new item to the Google Sheet
