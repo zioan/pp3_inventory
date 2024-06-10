@@ -1,31 +1,45 @@
 from rich.console import Console
-from modules.helpers import is_data_valid
 
 
-def user_input(label, available_options=None, description=None, type=None):
+def user_input(label, available_options=None, description=None, expected_type=None, allow_empty=False):
     console = Console()
     
     while True:
         user_prompt = input(label).strip()
         
-        # Check length
+        # Check if input length exceeds 20 characters
         if len(user_prompt) > 20:
             console.print(f"[red bold]You cannot enter more than 20 characters")
-        # Extra validation using is_data_valid helper if a type is provided
-        # This also allows empty input necessary for the update_item function
-        elif type:
-            if is_data_valid(user_prompt, type):
-                return user_prompt
-            else:
-                console.print(f"\n[red bold]The value must be {type}")
-        # If the input is empty and there is a description provided, a warning is printed including the description
-        elif user_prompt == "" and description:
+            continue  # Skip to the next iteration of the loop to prompt the user again
+        
+        # Check if input is not empty when empty strings are not allowed
+        if not allow_empty and user_prompt == "":
             console.print(f"\n[red bold]{description} cannot be empty.")
-        # If options are provided, the input validation is strict to options list
-        elif available_options:
-            if user_prompt not in available_options:
-                console.print("[bold red]Please select one of the available options\n")
-            else:
-                return user_prompt
-        else:
-            return user_prompt
+            continue  # Skip to the next iteration of the loop to prompt the user again
+        
+        # Validate input type
+        if expected_type and not is_data_valid(user_prompt, expected_type):
+            console.print(f"[red bold]The value must be {expected_type}")
+            continue  # Skip to the next iteration of the loop to prompt the user again
+        
+        # Validate against available options
+        if available_options and user_prompt not in available_options:
+            console.print("[bold red]Please select one of the available options\n")
+            continue  # Skip to the next iteration of the loop to prompt the user again
+        
+        # If all checks pass, return the valid input
+        return user_prompt
+
+    
+def is_data_valid(value, expected_type):
+    if expected_type == "text":
+        # Check if it's a string and not a numeric string
+        return isinstance(value, str) and not value.isdigit()
+    elif expected_type == "positive number":
+        try:
+            # Check if it's a number and a positive number
+            number = float(value)
+            return number > 0
+        except ValueError:
+            return False
+    return False  # If the expected_type is neither "text" nor "positive number"
