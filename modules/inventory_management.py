@@ -201,7 +201,7 @@ def update_item():
     max_index = len(data)
 
     while True:
-        index_to_update = user_input(f"Enter the index to update an item (1 - {max_index}), or '0' to cancel: ", "")
+        index_to_update = user_input(f"Enter the index to update an item (1 - {max_index}), or '0' to cancel: ")
 
         # Abort update and return to operations menu
         if index_to_update == '0':
@@ -222,28 +222,27 @@ def update_item():
         console.print("\n[bold blue]Item to update:")
         display_items([item_to_update], "")
 
-        # Get updated item details
-        console.print(f"[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
-        item_name = user_input(f"Enter new item name (leave blank to keep '{item_to_update['name']}'): ", "", "Item name", "text")
+        console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
+        item_name = user_input(f"Enter new item name (leave blank to keep '{item_to_update['name']}'): ", expected_type="text", allow_empty=True)
         if is_operation_canceled(item_name, "c"):
             return
-        item_name = item_name or item_to_update['name']  # Keep current value if blank
+        item_name = item_name or item_to_update['name']
 
-        item_type = user_input(f"Enter new item type (leave blank to keep '{item_to_update['type']}'): ", "", "Item type", "text")
+        item_type = user_input(f"Enter new item type (leave blank to keep '{item_to_update['type']}'): ", expected_type="text", allow_empty=True)
         if is_operation_canceled(item_type, "c"):
             return
-        item_type = item_type or item_to_update['type']  # Keep current value if blank
+        item_type = item_type or item_to_update['type']
 
-        item_quantity = user_input(f"Enter new item quantity (leave blank to keep '{item_to_update['quantity']}'): ", "", "Item quantity", "positive number")
+        item_quantity = user_input(f"Enter new item quantity (leave blank to keep '{item_to_update['quantity']}'): ", expected_type="positive number", allow_empty=True)
         if is_operation_canceled(item_quantity, "c"):
             return
-        item_quantity = item_quantity or item_to_update['quantity']  # Keep current value if blank
+        item_quantity = item_quantity or item_to_update['quantity']
 
-        item_unit = user_input(f"Enter new item measurement unit (leave blank to keep '{item_to_update['unit']}'): ", "", "Item unit", "text")
+        item_unit = user_input(f"Enter new item measurement unit (leave blank to keep '{item_to_update['unit']}'): ", expected_type="text", allow_empty=True)
         if is_operation_canceled(item_unit, "c"):
             return
-        item_unit = item_unit or item_to_update['unit']  # Keep current value if blank
-        
+        item_unit = item_unit or item_to_update['unit']
+
         updated_item = [{
             "index": index_to_update,
             "name": item_name,
@@ -255,7 +254,7 @@ def update_item():
         table_title = "The new item updated:"
         display_items(updated_item, table_title)
         
-        user_confirmation = user_input("Do you want to save this item? (y/n)", ['y', 'n'])
+        user_confirmation = user_input("Do you want to save this item? (y/n)", available_options=['y', 'n'])
         if user_confirmation.lower() == 'y':
             try:
                 # Update the item in the Google Sheet
