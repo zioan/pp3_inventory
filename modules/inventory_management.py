@@ -1,21 +1,29 @@
 from rich.console import Console
 from rich.table import Table
-from modules.google_sheets import get_data, new_item_handler, delete_handler, update_handler
 from modules.input_validation import user_input
-from modules.helpers import is_operation_canceled, get_valid_index
+from modules.google_sheets import (
+    get_data,
+    new_item_handler,
+    delete_handler,
+    update_handler
+)
+from modules.helpers import (
+    is_operation_canceled,
+    get_valid_index,
+    get_updated_value
+)
 
 
 def display_items(data, table_title):
     """Display inventory items in a formatted table using the Rich library.
-    
+
     Args:
-        data (list): A list of dictionaries, where each dictionary represents 
-                     an inventory item with keys 'name', 'type', 'quantity', and 'unit'.
-                     
+        data (list): A list of dictionaries, each dictionary represents
+                an inventory item with keys 'name', 'type', 'quantity', 'unit'.
     Returns: None
     """
     console = Console()
-    
+
     # If no items in inventory, display a message and prevent further execution
     if not data:
         console.print("[bold red]No items in inventory.[/bold red]")
@@ -23,7 +31,7 @@ def display_items(data, table_title):
 
     # Create a table
     print("\n")
-    table = Table(title = table_title)
+    table = Table(title=table_title)
 
     # Add columns to the table with styles
     table.add_column("Index", style="yellow")
@@ -42,9 +50,9 @@ def display_items(data, table_title):
             item["quantity"],
             item["unit"]
         )
-        table.add_section() # Add a horizontal line after each row
+        table.add_section()  # Add a horizontal line after each row
 
-     # Print the table to the console
+    # Print the table to the console
     console.print(table, "\n")
 
 
@@ -63,57 +71,62 @@ def search_inventory():
         menu = " | ".join(options)
         console.print(menu)
 
-        search_term = user_input("Enter the name of the item to search (or other operation): ")
+        query = user_input("Search by name (or choose an operation): ")
 
         # Abort search operation and return to operations menu
-        if is_operation_canceled(search_term, "c"):
-            return # Exit the function to prevent further execution
-        elif search_term == "1":
+        if is_operation_canceled(query, "c"):
+            return  # Exit the function to prevent further execution
+        elif query == "1":
             add_new_item()
             continue  # Continue the search loop
-        elif search_term == "2":
+        elif query == "2":
             update_item()
             continue  # Continue the search loop
-        elif search_term == "3":
+        elif query == "3":
             delete_item()
             continue  # Continue the search loop
 
-        found_items = [item for item in data if search_term.lower() in item["name"].lower()]
+        results = [
+            item
+            for item in data
+            if query.lower() in item["name"].lower()
+        ]
+
         filtered_data = []
-        if found_items:
+        if results:
             # Render results and continue search loop
-            for item in found_items:
+            for item in results:
                 filtered_data.append(item)
-            table_title = f"Search results for {search_term}" if search_term else "Inventory Items"
+            table_title = f'Search results for "{query}"'
             display_items(filtered_data, table_title)
         else:
-            console.print(f"\n[red]No items or operation found for [bold]'{search_term}'[/bold].\n")
+            console.print(f"\n[red]No items found for [bold]'{query}'.\n")
 
 
 def add_new_item():
     console = Console()
-    
+
     console.print("\n[blue bold underline]Add new item")
-    console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
-    
-    item_name = user_input("Enter item name: ", expected_type="text")
+    console.print("[blue]Enter details or 'c' to cancel:[/blue]\n")
+
+    item_name = user_input("Enter item name: ", type="text")
     if is_operation_canceled(item_name, "c"):
         return
-    
-    item_type = user_input("Enter item type: ", expected_type="text")
+
+    item_type = user_input("Enter item type: ", type="text")
     if is_operation_canceled(item_type, "c"):
         return
-    
-    item_quantity = user_input("Enter item quantity: ", expected_type="positive number")
+
+    item_quantity = user_input("Enter item quantity: ", type="positive number")
     if is_operation_canceled(item_quantity, "c"):
         return
-    
-    item_unit = user_input("Enter item measurement unit: ", expected_type="text")
+
+    item_unit = user_input("Enter item measurement unit: ", type="text")
     if is_operation_canceled(item_unit, "c"):
         return
-    
+
     data = get_data()
-    
+
     item_to_save = [{
         "index": len(data) + 1,
         "name": item_name,
@@ -121,44 +134,46 @@ def add_new_item():
         "quantity": item_quantity,
         "unit": item_unit
     }]
-    
+
     table_title = "Item to save:"
     display_items(item_to_save, table_title)
-    
-    user_confirmation = user_input("Do you want to save this item? (y/n)", available_options=['y', 'n'])
-    if user_confirmation.lower() == 'y':
+
+    conf_message = "Do you want to save this item? (y/n)"
+    user_conf = user_input(conf_message, available_options=['y', 'n'])
+    if user_conf.lower() == 'y':
         item_values = (item_name, item_type, item_quantity, item_unit)
         new_item_handler(item_values)
-    elif user_confirmation.lower() == 'n':
+    elif user_conf.lower() == 'n':
         console.print("[yellow]Operation aborted!\n")
         return  # Exit the function after aborting the operation
 
 
 def delete_item():
-    # Prevent circular dependency error 
+    # Prevent circular dependency error
     from modules.menu import operations_menu
-    
+
     console = Console()
     data = get_data()
 
     console.print("\n[blue bold underline]Delete item")
-    console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
-    
+    console.print("[blue]Enter details or 'c' to cancel:[/blue]\n")
+
     while True:
-        index_to_delete = get_valid_index(data, "Enter the index to delete an item")
-        if index_to_delete is None:
+        item_index = get_valid_index(data, "Enter the index to delete an item")
+        if item_index is None:
             return
 
         # Delete
-        item_to_delete = data[index_to_delete - 1]  # Adjust for 0-based indexing
+        item_to_delete = data[item_index - 1]  # Adjust for 0-based indexing
 
-        console.print("\n[bold red]Item to delete:")
+        console.print("\n[bold red]You are about to delete this item:")
         display_items([item_to_delete], "")
 
-        delete_confirmation = user_input("Are you sure you want to delete this item? (y/n)", ['y', 'n'])
+        delete_message = "Are you sure you want to delete this item? (y/n)"
+        delete_confirmation = user_input(delete_message, ['y', 'n'])
         if delete_confirmation.lower() == 'y':
-                # Remove the item from the data list
-                delete_handler(index_to_delete)
+            # Remove the item from the data list
+            delete_handler(item_index)
         else:
             console.print("[yellow]Deletion canceled![/yellow]")
             operations_menu()
@@ -175,39 +190,41 @@ def update_item():
     data = get_data()
 
     console.print("\n[blue bold underline]Update item")
-    console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
-    
+    console.print("[blue]Enter details or 'c' to cancel:[/blue]\n")
+
     while True:
-        
-        index_to_update = get_valid_index(data, "Enter the index to update an item")
+
+        index_to_update = get_valid_index(data, "Enter item index to update:")
         if index_to_update is None:
             return
 
         # Display current item
-        item_to_update = data[index_to_update - 1]  # Adjust for 0-based indexing
+        item_to_update = data[index_to_update - 1]  # Adjust for 0-based index
         console.print("\n[bold blue]Item to update:")
         display_items([item_to_update], "")
 
-        console.print("[blue]Fill the fields, or submit 'c' to cancel at any time:\n")
-        item_name = user_input(f"Enter new item name (leave blank to keep '{item_to_update['name']}'): ", expected_type="text", allow_empty=True)
-        if is_operation_canceled(item_name, "c"):
-            return
-        item_name = item_name or item_to_update['name']
+        console.print("[blue]Enter details or 'c' to cancel:[/blue]\n")
 
-        item_type = user_input(f"Enter new item type (leave blank to keep '{item_to_update['type']}'): ", expected_type="text", allow_empty=True)
-        if is_operation_canceled(item_type, "c"):
+        item_name = get_updated_value(item_to_update, "name", "text")
+        # If user cancels the operation while entering a value
+        if item_name is None:
             return
-        item_type = item_type or item_to_update['type']
 
-        item_quantity = user_input(f"Enter new item quantity (leave blank to keep '{item_to_update['quantity']}'): ", expected_type="positive number", allow_empty=True)
-        if is_operation_canceled(item_quantity, "c"):
+        item_type = get_updated_value(item_to_update, "type", "text")
+        if item_type is None:
             return
-        item_quantity = item_quantity or item_to_update['quantity']
 
-        item_unit = user_input(f"Enter new item measurement unit (leave blank to keep '{item_to_update['unit']}'): ", expected_type="text", allow_empty=True)
-        if is_operation_canceled(item_unit, "c"):
+        item_quantity = get_updated_value(
+            item_to_update,
+            "quantity",
+            "positive number"
+        )
+        if item_quantity is None:
             return
-        item_unit = item_unit or item_to_update['unit']
+
+        item_unit = get_updated_value(item_to_update, "unit", "text")
+        if item_unit is None:
+            return
 
         updated_item = [{
             "index": index_to_update,
@@ -216,11 +233,13 @@ def update_item():
             "quantity": item_quantity,
             "unit": item_unit
         }]
-        
+
         table_title = "The new item updated:"
         display_items(updated_item, table_title)
-        
-        user_confirmation = user_input("Do you want to save this item? (y/n)", available_options=['y', 'n'])
+
+        confirmation_message = "Do you want to save this item? (y/n)"
+        available_options = ['y', 'n']
+        user_confirmation = user_input(confirmation_message, available_options)
         if user_confirmation.lower() == 'y':
             update_handler(index_to_update, updated_item[0])
         elif user_confirmation.lower() == 'n':

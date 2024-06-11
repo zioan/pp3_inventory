@@ -62,3 +62,17 @@ def get_valid_index(data, prompt):
             continue
 
         return index
+
+
+def get_updated_value(item_to_update, field_name, field_type):
+    existing_value = item_to_update[field_name]
+    message = (
+        "Enter new item " + field_name +
+        " (leave blank to keep '" + str(existing_value) + "'): "
+    )
+    new_value = user_input(message, type=field_type, allow_empty=True)
+
+    if is_operation_canceled(new_value, "c"):
+        return None
+
+    return new_value or existing_value
