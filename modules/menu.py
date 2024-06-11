@@ -10,6 +10,12 @@ from modules.inventory_management import (
 
 
 def main_menu():
+    """
+    Display the main menu of the Inventory Management System.
+
+    Returns:
+        str: The user's choice of operation.
+    """
     console = Console()
     console.print("\n[blue bold underline]Inventory Management System")
 
@@ -30,6 +36,15 @@ def main_menu():
 
 
 def operations_menu():
+    """
+    Display the operations menu of the Inventory Management System.
+
+    This menu allows users to perform various operations such as adding,
+    updating, deleting, searching for items, and getting help.
+
+    Returns:
+        None
+    """
     console = Console()
 
     while True:
