@@ -4,11 +4,9 @@ from modules.input_validation import user_input
 
 def convert_to_dict(data):
     """Convert data from Google Sheets API into a list of dictionaries.
-    
     Args:
-        data (list): A list of lists where the first sublist contains headers 
-                     and subsequent sublists contain inventory data.
-                     
+        data (list): A list of lists where the first sublist contains headers
+                    and subsequent sublists contain inventory data.
     Returns:
         list: A list of dictionaries representing the inventory data.
     """
@@ -17,10 +15,11 @@ def convert_to_dict(data):
     # Initialize an empty list to store the dictionaries
     result = []
     # Iterate over each row in the data starting from the second row
-    for i, row in enumerate(data[1:], start=1): # Start from 1 to match Google Sheets row numbers
+    # Start from 1 to match Google Sheets row numbers
+    for i, row in enumerate(data[1:], start=1):
         # Create a dictionary for the current row
         row_dict = {
-            "index": i, # Use the loop index as the row number. "index", number
+            "index": i,  # Use the loop index as the row number.
             headers[0].lower(): row[0],  # "name"
             headers[1].lower(): row[1],  # "type"
             headers[2].lower(): row[2],  # "quantity", string
@@ -28,8 +27,8 @@ def convert_to_dict(data):
         }
         # Add the dictionary to the result list
         result.append(row_dict)
-    
-    return result 
+
+    return result
 
 
 def is_operation_canceled(user_input, cancel_value):
@@ -43,21 +42,23 @@ def is_operation_canceled(user_input, cancel_value):
 def get_valid_index(data, prompt):
     console = Console()
     max_index = len(data)
-    
+
     while True:
         index = user_input(f"{prompt} (1 - {max_index}): ")
-        
+
         # Abort operation if user cancels
         if is_operation_canceled(index, "c"):
             return None
-        
+
         try:
             index = int(index)
             if index not in range(1, max_index + 1):
-                console.print(f"[red]Invalid index '{index}'. Index should be between 1 and {max_index}.[/red]")
+                index_warning = f"Index should be between 1 and {max_index}."
+                console.print(f"[red]Invalid index '{index}'. {index_warning}")
                 continue
         except ValueError:
-            console.print(f"[red]Invalid input '{index}'. Please enter a number.[/red]")
+            number_warning = "Please enter a number."
+            console.print(f"[red]Invalid input '{index}'. {number_warning}")
             continue
-        
+
         return index
