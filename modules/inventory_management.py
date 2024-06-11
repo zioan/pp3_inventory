@@ -18,9 +18,13 @@ def display_items(data, table_title):
     """Display inventory items in a formatted table using the Rich library.
 
     Args:
-        data (list): A list of dictionaries, each dictionary represents
-                an inventory item with keys 'name', 'type', 'quantity', 'unit'.
-    Returns: None
+        data (list): A list of dictionaries representing inventory items,
+                     each dictionary containing keys
+                     'name', 'type', 'quantity', and 'unit'.
+        table_title (str): The title of the table to be displayed.
+
+    Returns:
+        None
     """
     console = Console()
 
@@ -57,6 +61,17 @@ def display_items(data, table_title):
 
 
 def search_inventory():
+    """Search for items in the inventory by name or perform other operations.
+
+    The function allows users to search for items in the inventory by name or
+    perform other operations such as adding, updating, or deleting items.
+
+    For convenience, this operation will run in a loop
+    until the user decides to go back.
+
+    Returns:
+        None
+    """
     console = Console()
 
     while True:
@@ -108,6 +123,18 @@ def search_inventory():
 
 
 def add_new_item():
+    """Add a new item to the inventory.
+
+    The function prompts the user to enter details of the new item
+    such as name, type, quantity, and unit.
+    It validates each input and ensures that the user has the option
+    to cancel the operation at any stage.
+    After entering the details, the user is prompted to confirm
+    the addition of the new item.
+
+    Returns:
+        None
+    """
     console = Console()
 
     console.print("\n[blue bold underline]Add new item")
@@ -153,7 +180,17 @@ def add_new_item():
 
 
 def delete_item():
+    """Delete an item from the inventory.
 
+    The function prompts the user to enter the index of the item
+    they want to delete.
+    It validates the input index and ensures that the user has
+    the option to cancel the operation.
+    After confirming the deletion, the item is removed from the inventory.
+
+    Returns:
+        None
+    """
     console = Console()
     data = get_data()
 
@@ -184,6 +221,19 @@ def delete_item():
 
 
 def update_item():
+    """Update an existing item in the inventory.
+
+    The function prompts the user to enter the index of the item
+    they want to update.
+    It displays the current details of the item and allows the user
+    to modify each attribute.
+    If the user cancels at any point during the update process,
+    the operation is aborted.
+    After confirming the changes, the updated item is saved to the inventory.
+
+    Returns:
+        None
+    """
     console = Console()
     data = get_data()
 
@@ -251,11 +301,24 @@ def update_item():
 
 
 def display_help():
+    """Display a help section providing information about
+    the Inventory Management System.
+
+    The function displays detailed instructions on how to use
+    the main menu and operations menu.
+    It provides explanations for each menu option, including adding,
+    updating, deleting items, searching the inventory, and accessing help.
+    It also includes general instructions and tips for better clarity
+    and ease of use.
+
+    Returns:
+        None
+    """
     console = Console()
 
     help_text = """
     [blue bold underline]Inventory Management Help[/blue bold underline]
-    
+
     [bold underline]Main Menu Options:[/bold underline]
     [bold]1. View Inventory:[/bold]
       - Displays the current inventory items.
