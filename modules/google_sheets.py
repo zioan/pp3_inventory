@@ -25,7 +25,7 @@ def get_data():
         data = convert_to_dict(inventory_data)
         return data
     except Exception as e:
-        console.print(f"[bold red]Failed to retrieve Inventory data: {str(e)}\n")
+        console.print(f"[bold red]Failed to retrieve Inventory data: {str(e)}")
 
 
 def new_item_handler(new_item):
@@ -42,7 +42,7 @@ def delete_handler(index):
     console = Console()
     try:
         inventory_sheet = SHEET.worksheet('inventory_sheet')
-        inventory_sheet.delete_rows(index + 1)  # Google Sheets is 1-based index
+        inventory_sheet.delete_rows(index + 1)
         console.print("[green]Item deleted successfully![/green]\n")
     except Exception as e:
         console.print(f"[bold red]Error deleting item: {str(e)}[/bold red]\n")
@@ -53,10 +53,14 @@ def update_handler(index_to_update, item):
     try:
         # Update the item in the Google Sheet
         inventory_sheet = SHEET.worksheet('inventory_sheet')
-        inventory_sheet.update_cell(index_to_update + 1, 1, item["name"])  # Update item name
-        inventory_sheet.update_cell(index_to_update + 1, 2, item["type"])  # Update item type
-        inventory_sheet.update_cell(index_to_update + 1, 3, item["quantity"])  # Update item quantity
-        inventory_sheet.update_cell(index_to_update + 1, 4, item["unit"])  # Update item unit
+        # Update item name
+        inventory_sheet.update_cell(index_to_update + 1, 1, item["name"])
+        # Update item type
+        inventory_sheet.update_cell(index_to_update + 1, 2, item["type"])
+        # Update item quantity
+        inventory_sheet.update_cell(index_to_update + 1, 3, item["quantity"])
+        # Update item unit
+        inventory_sheet.update_cell(index_to_update + 1, 4, item["unit"])
 
         console.print("[green]Item updated successfully![/green]\n")
     except Exception as e:
