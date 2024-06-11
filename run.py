@@ -8,13 +8,14 @@ from modules.google_sheets import get_data
 
 
 def start_view():
+    """Display the welcome message with ASCII art."""
     console = Console()
     ascii_art = text2art("Inventory")
     console.print(f"[green bold]{ascii_art}[/green bold]")
 
 
 def main():
-    """Run all program functions"""
+    """Run the main program loop."""
     os.system("clear")
 
     start_view()
@@ -36,4 +37,3 @@ def main():
 # Run the main function only if this script is executed directly
 if __name__ == "__main__":
     main()
-    
