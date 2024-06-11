@@ -149,8 +149,6 @@ def add_new_item():
 
 
 def delete_item():
-    # Prevent circular dependency error
-    from modules.menu import operations_menu
 
     console = Console()
     data = get_data()
@@ -170,19 +168,15 @@ def delete_item():
         display_items([item_to_delete], "")
 
         delete_message = "Are you sure you want to delete this item? (y/n)"
-        delete_confirmation = user_input(delete_message, ['y', 'n'])
+        available_options = ['y', 'n']
+        delete_confirmation = user_input(delete_message, available_options)
         if delete_confirmation.lower() == 'y':
             # Remove the item from the data list
             delete_handler(item_index)
+            break  # Exit the loop after handling the deletion
         else:
-            console.print("[yellow]Deletion canceled![/yellow]")
-            operations_menu()
+            console.print("[yellow]Deletion canceled!\n")
             return  # Exit the function after cancellation
-
-        break  # Exit the loop after handling the deletion
-
-    # Refetch data and continue with search loop or other necessary operations
-    data = get_data()
 
 
 def update_item():
