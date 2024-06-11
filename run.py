@@ -3,7 +3,7 @@ import os
 from rich.console import Console
 from art import text2art
 from modules.menu import main_menu, operations_menu
-from modules.inventory_management import display_items
+from modules.inventory_management import display_items, display_help
 from modules.google_sheets import get_data
 
 
@@ -26,6 +26,8 @@ def main():
             display_items(data, "Inventory Items")
         elif choice == "2":
             operations_menu()
+        elif choice == '9':
+            display_help()
         elif choice == "0":
             print("Quitting the application...")
             sys.exit()

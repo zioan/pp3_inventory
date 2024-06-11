@@ -4,7 +4,8 @@ from modules.inventory_management import (
     add_new_item,
     update_item,
     delete_item,
-    search_inventory
+    search_inventory,
+    display_help
 )
 
 
@@ -15,13 +16,14 @@ def main_menu():
     options = [
         "[green][bold]1.[/green][/bold] View Inventory",
         "[green][bold]2.[/green][/bold] Operations",
+        "[green][bold]9.[/green][/bold] Help",
         "[green][bold]0.[/green][/bold] Exit"
     ]
 
     menu = " | ".join(options)
     console.print(menu)
 
-    choices = ["1", "2", "0"]
+    choices = ["1", "2", "9", "0"]
     input = user_input("Choose an operation: ", choices)
 
     return input
@@ -31,27 +33,30 @@ def operations_menu():
     console = Console()
 
     while True:
-        console.print("\n[blue bold underline]Operation selector")
+        console.print("\n[blue bold underline]Operations Menu")
         options = [
             "[green][bold]1.[/green][/bold] Add",
             "[green][bold]2.[/green][/bold] Update",
             "[green][bold]3.[/green][/bold] Delete",
             "[green][bold]4.[/green][/bold] Search",
+            "[green][bold]9.[/green][/bold] Help",
             "[green][bold]0.[/green][/bold] Back",
         ]
         menu = " | ".join(options)
         console.print(menu)
 
-        choices = ["1", "2", "3", "4", "0"]
-        input = user_input("Choose an operation: ", choices)
+        available_options = ["1", "2", "3", "4", "9", "0"]
+        selection = user_input("Select an option: ", available_options)
 
-        if input == "1":
+        if selection == '0':
+            break  # Exit the loop and end the program
+        elif selection == '1':
             add_new_item()
-        elif input == "2":
+        elif selection == '2':
             update_item()
-        elif input == "3":
+        elif selection == '3':
             delete_item()
-        elif input == "4":
+        elif selection == '4':
             search_inventory()
-        elif input == "0":
-            return  # Return to the previous menu
+        elif selection == '9':
+            display_help()

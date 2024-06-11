@@ -65,6 +65,7 @@ def search_inventory():
             "[green][bold]1.[/green][/bold] Add",
             "[green][bold]2.[/green][/bold] Update",
             "[green][bold]3.[/green][/bold] Delete",
+            "[green][bold]9.[/green][/bold] Help",
             "[green][bold]c.[/green][/bold] Cancel",
         ]
         menu = " | ".join(options)
@@ -80,10 +81,13 @@ def search_inventory():
             continue  # Continue the search loop
         elif query == "2":
             update_item()
-            continue  # Continue the search loop
+            continue
         elif query == "3":
             delete_item()
-            continue  # Continue the search loop
+            continue
+        elif query == "9":
+            display_help()
+            continue
 
         data = get_data()
         results = [
@@ -244,3 +248,57 @@ def update_item():
 
     # Refetch data and continue with search loop or other necessary operations
     data = get_data()
+
+
+def display_help():
+    console = Console()
+
+    help_text = """
+    [blue bold underline]Inventory Management Help[/blue bold underline]
+    
+    [bold underline]Main Menu Options:[/bold underline]
+    [bold]1. View Inventory:[/bold]
+      - Displays the current inventory items.
+    [bold]2. Operations:[/bold]
+      - Navigate to the operations menu to manage inventory items.
+    [bold]9. Help:[/bold]
+      - Displays this help section.
+    [bold]0. Exit:[/bold]
+      - Exit the application.
+
+    [bold underline]Operations Menu Options:[/bold underline]
+    [bold]1. Add:[/bold]
+      - Select this option to add a new item to the inventory.
+      - You will be prompted to enter the item's details.
+      - You can cancel the operation at any time by entering 'c'.
+    [bold]2. Update:[/bold]
+      - Select this option to update an existing item in the inventory.
+      - You will be prompted to enter the index of the item you wish to update.
+      - You will get a prompt for each detail (name, type, quantity and unit).
+      - You can leave the prompt empty to keep the previous value.
+      - You can cancel the operation at any time by entering 'c'.
+    [bold]3. Delete:[/bold]
+      - Select this option to delete an item from the inventory.
+      - You will be prompted to enter the index of the item you wish to delete.
+      - You will be asked to confirm the deletion.
+      - You can cancel the operation at any time by entering 'c'.
+    [bold]4. Search:[/bold]
+      - Select this option to search for items in the inventory.
+      - This operation will run until you choose to return to the main menu.
+      - You can search by entering the name of the item.
+      - You can also select one of the other operations (Add, Update, Delete).
+      - You can cancel the operation at any time by entering 'c'.
+    [bold]9. Help:[/bold]
+      - Displays this help section.
+    [bold]0. Back:[/bold]
+      - Returns to the previous menu or exits the application.
+
+    [bold underline]General Instructions:[/bold underline]
+    - Ensure that your inputs do not exceed 20 characters.
+    - Follow the prompts carefully and enter the required information.
+    - Use 'c' to cancel any operation and return to the main menu.
+    - For better clarity on which item to edit or delete,
+      I recommend using these functions in conjunction with the search feature.
+    """
+
+    console.print(help_text)
