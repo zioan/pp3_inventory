@@ -12,14 +12,13 @@ def start_view():
     ascii_art = text2art("Inventory")
     console.print(f"[green bold]{ascii_art}[/green bold]")
 
-       
 
 def main():
     """Run all program functions"""
     os.system("clear")
-    
+
     start_view()
-    
+
     while True:
         choice = main_menu()
         if choice == "1":
@@ -30,7 +29,7 @@ def main():
         elif choice == "0":
             print("Quitting the application...")
             sys.exit()
-    
+
 
 # Run the main function only if this script is executed directly
 if __name__ == "__main__":
