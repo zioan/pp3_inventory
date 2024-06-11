@@ -18,6 +18,11 @@ SHEET = GSPREAD_CLIENT.open('Inventory')
 
 
 def get_data():
+    """Retrieve data from the Google Sheets inventory worksheet.
+
+    Returns:
+        list: A list of dictionaries representing inventory items.
+    """
     console = Console()
     try:
         inventory_sheet = SHEET.worksheet('inventory_sheet')
@@ -29,6 +34,14 @@ def get_data():
 
 
 def new_item_handler(new_item):
+    """Add a new item to the Google Sheets inventory worksheet.
+
+    Args:
+        new_item (tuple): A tuple containing the new item data.
+
+    Returns:
+        None
+    """
     console = Console()
     try:
         inventory_sheet = SHEET.worksheet('inventory_sheet')
@@ -39,6 +52,14 @@ def new_item_handler(new_item):
 
 
 def delete_handler(index):
+    """Delete an item from the Google Sheets inventory worksheet.
+
+    Args:
+        index (int): The index of the item to delete.
+
+    Returns:
+        None
+    """
     console = Console()
     try:
         inventory_sheet = SHEET.worksheet('inventory_sheet')
@@ -49,9 +70,17 @@ def delete_handler(index):
 
 
 def update_handler(index_to_update, item):
+    """Update an existing item in the Google Sheets inventory worksheet.
+
+    Args:
+        index_to_update (int): The index of the item to update.
+        item (dict): A dictionary containing the updated item data.
+
+    Returns:
+        None
+    """
     console = Console()
     try:
-        # Update the item in the Google Sheet
         inventory_sheet = SHEET.worksheet('inventory_sheet')
         # Update item name
         inventory_sheet.update_cell(index_to_update + 1, 1, item["name"])
