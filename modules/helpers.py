@@ -4,9 +4,11 @@ from modules.input_validation import user_input
 
 def convert_to_dict(data):
     """Convert data from Google Sheets API into a list of dictionaries.
+
     Args:
         data (list): A list of lists where the first sublist contains headers
-                    and subsequent sublists contain inventory data.
+                     and subsequent sublists contain inventory data.
+
     Returns:
         list: A list of dictionaries representing the inventory data.
     """
@@ -32,6 +34,15 @@ def convert_to_dict(data):
 
 
 def is_operation_canceled(user_input, cancel_value):
+    """Check if the user has canceled the operation.
+
+    Args:
+        user_input (str): The user input to check for cancellation.
+        cancel_value (str): The value representing cancellation.
+
+    Returns:
+        bool: True if the operation is canceled, False otherwise.
+    """
     console = Console()
     if user_input.lower() == cancel_value:
         console.print("[yellow]Operation aborted!\n")
@@ -40,6 +51,15 @@ def is_operation_canceled(user_input, cancel_value):
 
 
 def get_valid_index(data, prompt):
+    """Prompt the user to enter a valid index within the range of data.
+
+    Args:
+        data (list): A list of items.
+        prompt (str): The prompt message to display to the user.
+
+    Returns:
+        int or None: The valid index entered by the user, or None if canceled.
+    """
     console = Console()
     max_index = len(data)
 
@@ -65,6 +85,16 @@ def get_valid_index(data, prompt):
 
 
 def get_updated_value(item_to_update, field_name, field_type):
+    """Get the updated value for a specific field in an item.
+
+    Args:
+        item_to_update (dict): The item to be updated.
+        field_name (str): The name of the field to be updated.
+        field_type (type): The type of the field (e.g., str, int).
+
+    Returns:
+        str or None: The updated value for the field, or None if canceled.
+    """
     existing_value = item_to_update[field_name]
     message = (
         "Enter new item " + field_name +
