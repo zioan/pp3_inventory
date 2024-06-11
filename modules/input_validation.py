@@ -1,45 +1,45 @@
 from rich.console import Console
 
 
-def user_input(label, available_options=None, expected_type=None, allow_empty=False):
+def user_input(label, available_options=None, type=None, allow_empty=False):
     console = Console()
-    
+
     while True:
         user_prompt = input(label).strip()
-        
+
         # Check if input length exceeds 20 characters
         if len(user_prompt) > 20:
-            console.print(f"[red bold]You cannot enter more than 20 characters")
-            continue  # Skip to the next iteration of the loop to prompt the user again
-        
+            console.print("[red bold]You cannot enter more than 20 characters")
+            continue  # Skip to the next iteration and prompt the user again
+
         # Check if input is not empty when empty strings are not allowed
         if not allow_empty and user_prompt == "":
-            console.print(f"\n[red bold]This field cannot be empty.")
-            continue  # Skip to the next iteration of the loop to prompt the user again
-        
+            console.print("\n[red bold]This field cannot be empty.")
+            continue  # Skip to the next iteration and prompt the user again
+
         # Validate input type
-        if expected_type and user_prompt and not is_data_valid(user_prompt, expected_type):
-            console.print(f"\n[red bold]The value must be {expected_type}")
-            continue  # Skip to the next iteration of the loop to prompt the user again
-        
+        if type and user_prompt and not is_data_valid(user_prompt, type):
+            console.print(f"\n[red bold]The value must be {type}")
+            continue  # Skip to the next iteration and prompt the user again
+
         # Validate against available options
         if available_options and user_prompt not in available_options:
-            console.print("\n[bold red]Please select one of the available options")
-            continue  # Skip to the next iteration of the loop to prompt the user again
-        
+            console.print("\n[bold red]Please select one available option")
+            continue  # Skip to the next iteration and prompt the user again
+
         # If all checks pass, return the valid input
         return user_prompt
 
-    
-def is_data_valid(value, expected_type):
-    if expected_type == "text":
+
+def is_data_valid(value, type):
+    if type == "text":
         # Check if it's a string and not a numeric string
         return isinstance(value, str) and not value.isdigit()
-    elif expected_type == "positive number":
+    elif type == "positive number":
         try:
             # Check if it's a number and a positive number
             number = float(value)
             return number > 0
         except ValueError:
             return False
-    return False  # If the expected_type is neither "text" nor "positive number"
+    return False  # If the type is neither "text" nor "positive number"
