@@ -58,7 +58,6 @@ def display_items(data, table_title):
 
 def search_inventory():
     console = Console()
-    data = get_data()
 
     while True:
         console.print("\n[blue bold underline]Search Inventory")
@@ -86,6 +85,7 @@ def search_inventory():
             delete_item()
             continue  # Continue the search loop
 
+        data = get_data()
         results = [
             item
             for item in data
