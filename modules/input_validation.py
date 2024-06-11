@@ -2,6 +2,18 @@ from rich.console import Console
 
 
 def user_input(label, available_options=None, type=None, allow_empty=False):
+    """Prompt the user for input with validation checks.
+
+    Args:
+        label (str): The prompt message to display to the user.
+        available_options (list, optional): List of available options for
+        user input.
+        type (str, optional): The expected type of the input.
+        allow_empty (bool, optional): Whether to allow empty input or not.
+
+    Returns:
+        str: The user input that passes all validation checks.
+    """
     console = Console()
 
     while True:
@@ -32,6 +44,15 @@ def user_input(label, available_options=None, type=None, allow_empty=False):
 
 
 def is_data_valid(value, type):
+    """Check if the input value is valid based on the specified type.
+
+    Args:
+        value (str): The input value to be validated.
+        type (str): The expected type of the input.
+
+    Returns:
+        bool: True if the input value is valid, False otherwise.
+    """
     if type == "text":
         # Check if it's a string and not a numeric string
         return isinstance(value, str) and not value.isdigit()
