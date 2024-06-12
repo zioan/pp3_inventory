@@ -24,8 +24,9 @@ The Inventory Management System is a Python-based application designed to simpli
     - [Input Testing](#input-testing)
     - [PEP8 Testing](#pep8-testing)
     - [Testing User Stories](#testing-user-stories)
-9. [Deployment](#deployment)
-10. [Credits](#credits)
+9. [Bugs](#bugs)
+10. [Deployment](#deployment)
+11. [Credits](#credits)
 
 
 ## User Stories
@@ -202,6 +203,22 @@ By conducting thorough input testing, PEP8 testing, and testing of user stories,
 
 
 All Python files have been passed through [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards.
+
+
+## Bugs
+
+The following bugs were identified and fixed during the development stage:
+
+1. **Fix delete function behavior when breaking the loop**: Resolved an issue where the delete function behavior was inconsistent when breaking the loop, ensuring that items are deleted correctly.
+
+2. **Fix application not exiting and returning to main menu properly**: Addressed a bug where the application did not exit properly and return to the main menu after completing an operation, ensuring smooth navigation within the system. The characteristic of this bug was prompting the same menu for a second time before taking the proper action.
+
+3. **Fix user_input validation to handle empty input and expected type in the same time**: Fixed a validation bug where the system did not handle empty input and expected type validation simultaneously, improving input validation and user experience. This feature is used in the update function.
+
+4. **Fix search_inventory data retrieving after each operation**: Corrected an issue where the search_inventory function did not retrieve data correctly after performing an operation, ensuring accurate search results. In other words, the search functionality was serving outdated data.
+
+There are no known unfixed bugs in the Inventory Management System.
+
 
 ## Deployment
 
