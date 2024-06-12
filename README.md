@@ -2,6 +2,31 @@
 
 The Inventory Management System is a Python-based application designed to simplify the process of managing an inventory of items. Whether you're adding new items, updating existing ones, or deleting obsolete ones, this system provides a user-friendly interface to handle these tasks efficiently.
 
+
+## Table of Contents
+
+1. [User Stories](#user-stories)
+2. [Features](#features)
+    - [Main Menu](#main-menu)
+    - [Operations Menu](#operations-menu)
+    - [Add Item](#add-item)
+    - [Update Item](#update-item)
+    - [Delete Item](#delete-item)
+    - [Search Inventory](#search-inventory)
+    - [Validation](#validation)
+    - [Help Section](#help-section)
+3. [How to Use](#how-to-use)
+4. [User Benefits](#user-benefits)
+5. [Data Model](#data-model)
+6. [Libraries and Technologies Used](#libraries-and-technologies-used)
+7. [Testing](#testing)
+    - [Input Testing](#input-testing)
+    - [PEP8 Testing](#pep8-testing)
+    - [Testing User Stories](#testing-user-stories)
+8. [Deployment](#deployment)
+9. [Credits](#credits)
+
+
 ## User Stories
 
 As a user, I want to be able to:
@@ -215,3 +240,5 @@ By following these steps through Heroku's dashboard, I successfully deployed the
 - **Prompt Toolkit Documentation**: For advanced input handling.
 
 - **Stack Overflow**: For troubleshooting and code examples.
+
+[Back to Top](#inventory-management-system)
