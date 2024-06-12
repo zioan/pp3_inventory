@@ -25,8 +25,9 @@ The Inventory Management System is a Python-based application designed to simpli
     - [PEP8 Testing](#pep8-testing)
     - [Testing User Stories](#testing-user-stories)
 9. [Bugs](#bugs)
-10. [Deployment](#deployment)
-11. [Credits](#credits)
+10. [Version Control](#version-control)
+11. [Deployment](#deployment)
+12. [Credits](#credits)
 
 
 ## User Stories
@@ -218,6 +219,16 @@ The following bugs were identified and fixed during the development stage:
 4. **Fix search_inventory data retrieving after each operation**: Corrected an issue where the search_inventory function did not retrieve data correctly after performing an operation, ensuring accurate search results. In other words, the search functionality was serving outdated data.
 
 There are no known unfixed bugs in the Inventory Management System.
+
+
+## Version Control
+
+Throughout the development process, I utilized basic Git commands to manage version control effectively. All necessary files were included in the repository. Here are the main commands I used:
+
+- git add 'file_name': Added specific files to the staging area before committing changes.
+- git add.: To add all files to the staging area before committing changes.
+- git commit -m "commit message": Commited the staged changes with descriptive messages to track the progress of the project.
+- git push: Pushed local commits to the remote repository on GitHub, ensuring that the latest changes were synchronized with the online repository.
 
 
 ## Deployment
