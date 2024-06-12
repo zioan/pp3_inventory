@@ -89,3 +89,30 @@ The Inventory Management System significantly streamlines inventory management f
 
 - **Convenience**: Search for items easily and manage them directly from the search results. This feature enhances user experience by providing a seamless workflow, allowing users to quickly locate and manage inventory items without navigating through multiple menus.
 
+
+## Logic Flow
+
+Starting with a flowchart helped to design the project efficiently. Flowcharts simplified the complex logic, making it easier to understand the code and identify potential error points.
+
+
+## Data Model
+
+The Inventory Management System utilizes a simple yet effective data model to store and manage inventory information. The data model consists of the following key components:
+
+1. **Item**: Each inventory item is represented as a dictionary with the following attributes:
+   - **Index**: A unique identifier for the item.
+   - **Name**: The name of the item.
+   - **Type**: The type or category of the item.
+   - **Quantity**: The quantity or number of units available.
+   - **Unit**: The unit of measurement for the item.
+
+2. **Google Sheets Integration**: The system integrates with Google Sheets to store inventory data. Google Sheets provides a familiar and accessible platform for users to manage their inventory, offering features such as collaboration, version history, and easy access from any device with internet connectivity.
+
+3. **Validation and Error Handling**: The system incorporates validation checks to ensure data integrity and accuracy. Input validation is performed for fields such as quantity and index to prevent incorrect or invalid data entry. Additionally, error handling mechanisms are implemented to gracefully handle exceptions and provide informative error messages to users in case of unexpected issues.
+
+4. **Operations and CRUD Functionality**: The data model supports basic CRUD (Create, Read, Update, Delete) operations for managing inventory items. Users can add new items, update existing items, delete items, and view the current inventory. Each operation is designed to interact seamlessly with the underlying data model, ensuring consistent and reliable data management.
+
+5. **Search Functionality**: The system includes a search feature that allows users to search for specific items by name. The search functionality enhances user experience by providing a quick and efficient way to locate inventory items without scrolling through the entire inventory list.
+
+Overall, the data model of the Inventory Management System is designed to be flexible, scalable, and user-friendly, providing users with a robust platform for effective inventory management.
+
