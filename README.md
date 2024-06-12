@@ -196,3 +196,22 @@ I deployed the Inventory Management System using Heroku's dashboard, which provi
 5. **Verifying Deployment**: Once the deployment process completed, I verified that my application was running smoothly by opening the provided Heroku URL in my web browser.
 
 By following these steps through Heroku's dashboard, I successfully deployed the Inventory Management System, making it accessible to users.
+
+
+## Credits
+
+### Resources Used
+
+- **Heroku**: The platform provided seamless deployment and hosting services for the application.
+
+- **Google Sheets API**: Integration with the API enabled efficient data management and storage.
+
+- **Rich Library**: The Rich library enhanced the terminal interface with colorful styling and table formatting.
+
+- **gspread Library**: This library facilitated interaction with Google Sheets, allowing seamless data retrieval and manipulation.
+
+- **Text to ASCII Art Generator**: ASCII art in the application was generated using the "text2art" library.
+
+- **Prompt Toolkit Documentation**: For advanced input handling.
+
+- **Stack Overflow**: For troubleshooting and code examples.
