@@ -132,3 +132,47 @@ The Inventory Management System leverages several libraries and technologies to 
 5. **Text to ASCII Art Converter**: The system utilizes a text to ASCII art converter library to generate ASCII art for the welcome message, adding visual appeal to the user interface and enhancing the overall user experience.
 
 By leveraging these libraries and technologies, the Inventory Management System delivers a robust, feature-rich solution for efficient inventory management in a terminal-based environment.
+
+
+## Testing
+
+The Inventory Management System undergoes rigorous testing to ensure functionality, reliability, and adherence to coding standards. Testing encompasses various aspects of the system, including input validation, compliance with PEP8 coding guidelines, and validation of user stories.
+
+### Input Testing
+
+Input testing focuses on validating user inputs to ensure that the system handles different scenarios gracefully and provides appropriate feedback to users. Key aspects of input testing include:
+
+- **Boundary Testing**: Test inputs at the extremes of allowed ranges to verify that the system handles edge cases correctly.
+  
+- **Invalid Input Testing**: Test inputs with invalid formats or values to ensure that the system rejects them and provides informative error messages to users.
+
+- **Empty Input Testing**: Test scenarios where required fields are left empty to ensure that the system prompts users to provide the necessary information and does not proceed with incomplete data.
+
+- **Confirmation Testing**: Test confirmation prompts for operations such as adding, updating, or deleting items to ensure that users can confirm or cancel their actions as intended.
+
+### PEP8 Testing
+
+PEP8 testing focuses on ensuring that the codebase adheres to the guidelines outlined in PEP8, the official style guide for Python code. Key aspects of PEP8 testing include:
+
+- **Code Formatting**: Verify that the code follows consistent formatting conventions, including indentation, line length, and spacing.
+
+- **Naming Conventions**: Ensure that variable names, function names, and other identifiers adhere to PEP8 naming conventions to improve code readability and maintainability.
+
+- **Code Structure**: Review the overall structure of the codebase to identify any potential improvements in organization and clarity.
+
+- **Code Linting**: Utilize automated code analysis tools such as Flake8 or Pylint to identify and correct violations of PEP8 guidelines.
+
+### Testing User Stories
+
+Testing user stories involves verifying that the system's features and functionality align with user expectations and requirements. Key aspects of testing user stories include:
+
+- **Scenario Testing**: Test each user story scenario to ensure that the system behaves as expected and meets user needs.
+
+- **User Interaction Testing**: Evaluate user interactions with the system to identify any usability issues or areas for improvement.
+
+- **Edge Case Testing**: Test user stories with edge cases to verify that the system handles uncommon or unexpected scenarios correctly.
+
+By conducting thorough input testing, PEP8 testing, and testing of user stories, the Inventory Management System maintains high standards of quality, usability, and user satisfaction.
+
+
+All Python files have been passed through [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards.
