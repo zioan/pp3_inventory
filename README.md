@@ -176,3 +176,23 @@ By conducting thorough input testing, PEP8 testing, and testing of user stories,
 
 
 All Python files have been passed through [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards.
+
+## Deployment
+
+I deployed the Inventory Management System using Heroku's dashboard, which provides a user-friendly interface for deploying web applications. Here's how I did it:
+
+1. **Creating a Heroku App**: I logged in to my Heroku account and navigated to the dashboard. From there, I clicked on the "New" button and selected "Create new app". I entered a unique name for my app and chose the appropriate region.
+
+2. **Connecting to GitHub**: In the deployment section of my Heroku app dashboard, I selected the deployment method as GitHub. I connected my GitHub account and selected the repository containing my Inventory Management System code.
+
+6. **Configuring Environment Variables**: I configured any necessary environment variables in the Heroku dashboard under the "Settings" tab for my app.
+
+5. **Installing Python and Node.js Buildpacks**: In the settings section of my Heroku app dashboard, I navigated to the "Buildpacks" section. From there, I added both the Python and Node.js Buildpacks to ensure that my application could handle both Python and JavaScript dependencies required for the template.
+
+3. **Configuring Automatic Deploys**: After connecting to GitHub, I enabled automatic deploys for my app. This allowed Heroku to automatically deploy my application whenever I pushed changes to the connected GitHub repository.
+
+4. **Manual Deployments**: Additionally, I had the option to manually trigger deployments from the dashboard. I could select a branch to deploy and initiate the deployment process with a simple click.
+
+5. **Verifying Deployment**: Once the deployment process completed, I verified that my application was running smoothly by opening the provided Heroku URL in my web browser.
+
+By following these steps through Heroku's dashboard, I successfully deployed the Inventory Management System, making it accessible to users.
