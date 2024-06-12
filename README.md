@@ -48,3 +48,44 @@ As a user, I want to be able to:
 ### Validation
 - Implements robust input validation to ensure data integrity and prevent errors.
 - Checks for valid input types, empty values, and available options to enhance user experience.
+
+## How to Use
+
+1. **View Inventory**: Select "View Inventory" from the main menu to display all items currently in the inventory.
+
+2. **Add Item**:
+   - Choose "Add" from the Operations Menu.
+   - Enter the details of the new item, including name, type, quantity, and unit.
+   - Confirm to save the new item to the inventory.
+
+3. **Update Item**:
+   - Select "Update" from the Operations Menu to modify an existing item.
+   - Enter the index of the item you want to update.
+   - Modify the details of the item, including name, type, quantity, and unit.
+   - Leave the input empty for any detail you don't want to change, keeping the previous value unchanged.
+   - Confirm to save the changes to the inventory.
+
+4. **Delete Item**:
+   - Choose "Delete" from the Operations Menu to remove an item from the inventory.
+   - Enter the index of the item you want to delete.
+   - Confirm the deletion to remove the item from the inventory.
+
+5. **Search Inventory**:
+   - Access the "Search" option from the Operations Menu to quickly locate specific items.
+   - Enter the name of the item you want to search for.
+   - View the search results.
+   - Choose to add, update, or delete items directly from the search results, enhancing user experience by providing context for the operations.
+
+
+## User Benefits
+
+The Inventory Management System significantly streamlines inventory management for users. Key benefits include:
+
+- **Efficiency**: Manage inventory items efficiently through a user-friendly interface, reducing the time and effort required for inventory management tasks.
+  
+- **Accuracy**: Ensure data accuracy with built-in validation checks, preventing errors in data entry and ensuring reliable inventory records.
+
+- **Control**: Perform operations such as adding, updating, and deleting items with confidence. Confirmation prompts during these operations help prevent accidental changes, giving users greater control over their inventory.
+
+- **Convenience**: Search for items easily and manage them directly from the search results. This feature enhances user experience by providing a seamless workflow, allowing users to quickly locate and manage inventory items without navigating through multiple menus.
+
