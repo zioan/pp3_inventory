@@ -116,3 +116,19 @@ The Inventory Management System utilizes a simple yet effective data model to st
 
 Overall, the data model of the Inventory Management System is designed to be flexible, scalable, and user-friendly, providing users with a robust platform for effective inventory management.
 
+
+## Libraries and Technologies Used
+
+The Inventory Management System leverages several libraries and technologies to provide a seamless user experience and efficient inventory management capabilities. Key components include:
+
+1. **Python**: The system is built using Python, a versatile and widely-used programming language known for its simplicity and readability. Python provides the foundation for developing the application's logic and functionality.
+
+2. **Rich Library**: Rich is a Python library that enhances terminal output with rich formatting, colors, and styles. It is utilized in the system's user interface to create visually appealing menus, tables, and text formatting, improving readability and user experience.
+
+3. **gspread Library**: gspread is a Python library for accessing Google Sheets spreadsheets using the Google Sheets API. It enables seamless integration with Google Sheets, allowing the system to read and write inventory data to Google Sheets spreadsheets securely.
+
+4. **Google Sheets API**: The Google Sheets API provides programmatic access to Google Sheets spreadsheets, allowing the system to interact with inventory data stored in Google Sheets. It facilitates real-time data synchronization, collaboration, and version control for inventory management.
+
+5. **Text to ASCII Art Converter**: The system utilizes a text to ASCII art converter library to generate ASCII art for the welcome message, adding visual appeal to the user interface and enhancing the overall user experience.
+
+By leveraging these libraries and technologies, the Inventory Management System delivers a robust, feature-rich solution for efficient inventory management in a terminal-based environment.
