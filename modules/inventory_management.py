@@ -296,9 +296,6 @@ def update_item():
 
         break  # Exit the loop after handling the update
 
-    # Refetch data and continue with search loop or other necessary operations
-    data = get_data()
-
 
 def display_help():
     """Display a help section providing information about
