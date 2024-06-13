@@ -1,4 +1,9 @@
 import gspread
+from gspread.exceptions import (
+    APIError,
+    SpreadsheetNotFound,
+    WorksheetNotFound
+)
 from google.oauth2.service_account import Credentials
 from rich.console import Console
 from modules.helpers import convert_to_dict
@@ -9,7 +14,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
-    ]
+]
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
@@ -29,7 +34,7 @@ def get_data():
         inventory_data = inventory_sheet.get_all_values()
         data = convert_to_dict(inventory_data)
         return data
-    except Exception as e:
+    except (APIError, SpreadsheetNotFound, WorksheetNotFound) as e:
         console.print(f"[bold red]Failed to retrieve Inventory data: {str(e)}")
 
 
@@ -47,7 +52,7 @@ def new_item_handler(new_item):
         inventory_sheet = SHEET.worksheet('inventory_sheet')
         inventory_sheet.append_row(new_item)
         console.print("[green]Item saved successfully!\n")
-    except Exception as e:
+    except (APIError, SpreadsheetNotFound, WorksheetNotFound) as e:
         console.print(f"[bold red]Failed to save item: {str(e)}\n")
 
 
@@ -65,7 +70,7 @@ def delete_handler(index):
         inventory_sheet = SHEET.worksheet('inventory_sheet')
         inventory_sheet.delete_rows(index + 1)
         console.print("[green]Item deleted successfully![/green]\n")
-    except Exception as e:
+    except (APIError, SpreadsheetNotFound, WorksheetNotFound) as e:
         console.print(f"[bold red]Error deleting item: {str(e)}[/bold red]\n")
 
 
@@ -92,5 +97,5 @@ def update_handler(index_to_update, item):
         inventory_sheet.update_cell(index_to_update + 1, 4, item["unit"])
 
         console.print("[green]Item updated successfully![/green]\n")
-    except Exception as e:
+    except (APIError, SpreadsheetNotFound, WorksheetNotFound) as e:
         console.print(f"[bold red]Error updating item: {str(e)}[/bold red]\n")
