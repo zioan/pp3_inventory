@@ -2,6 +2,8 @@
 
 The Inventory Management System is a Python-based application designed to simplify the process of managing an inventory of items. Whether you're adding new items, updating existing ones, or deleting obsolete ones, this system provides a user-friendly interface to handle these tasks efficiently.
 
+![Inventory Management System](assets/readme/images/inventory.png)
+
 
 ## Table of Contents
 
@@ -14,7 +16,7 @@ The Inventory Management System is a Python-based application designed to simpli
     - [Delete Item](#delete-item)
     - [Search Inventory](#search-inventory)
     - [Help Section](#help-section)
-    - [Validation](#validation)
+    - [Validation and Feedback](#validation-and-feedback)
 3. [How to Use](#how-to-use)
 4. [User Benefits](#user-benefits)
 5. [Logic Flow](#logic-flow)
@@ -45,37 +47,66 @@ As a user, I want to be able to:
 - Provides options to navigate through the application.
 - Allows users to view inventory items, perform operations, access help, and exit the application.
 
+![Main Menu](assets/readme/images/main-menu.png)
+
 ### Operations Menu
 - Offers a range of operations for managing inventory items, including adding, updating, deleting, and searching for items.
 - Guides users through each operation with clear prompts and instructions.
+
+![Operations Menu](assets/readme/images/operations-menu.png)
 
 #### Add New Item
 - Allows users to add a new item to the inventory.
 - Prompts users to enter details such as name, type, quantity, and unit.
 - Validates input and provides options to cancel the operation if needed.
 
+![Add new Item](assets/readme/images/add-new-item.png)
+
 #### Update Item
 - Enables users to update an existing item in the inventory.
 - Prompts users to select the item to update and enter new details for each attribute.
 - Validates input and provides options to cancel the operation if needed.
 
+![Update Item](assets/readme/images/update-item.png)
+
 #### Delete Item
 - Allows users to delete an item from the inventory.
 - Prompts users to select the item to delete and confirms the deletion before proceeding.
+
+![Delete Item](assets/readme/images/delete-item.png)
 
 #### Search Inventory
 - Enables users to search for items in the inventory by name.
 - Displays search results and provides options to perform other operations such as adding, updating, or deleting items.
 - Runs in a loop until the user decides to return to the main menu.
 
+![Search item](assets/readme/images/search-item.png)
+
 ### Help Section
 - Provides comprehensive instructions and guidance on how to use the application effectively.
 - Offers explanations for each menu option, including examples and tips for better clarity.
 - Ensures users have access to assistance whenever needed.
 
-### Validation
+![Help Section](assets/readme/images/help-section.png)
+
+### Validation and Feedback
 - Implements robust input validation to ensure data integrity and prevent errors.
-- Checks for valid input types, empty values, and available options to enhance user experience.
+
+![Code snippet](assets/readme/images/user-input-snippet.png)
+
+![Code snippet](assets/readme/images/is-data-valid-snippet.png)
+
+- Checks for valid input types, empty values, available options, and enhance user experience with feedback messages.
+
+![Validation](assets/readme/images/input-validation.png)
+
+![Validation](assets/readme/images/input-validation-1.png)
+
+![Validation](assets/readme/images/input-validation-2.png)
+
+![Success Feedback](assets/readme/images/feedback-success.png)
+
+![Abort Feedback](assets/readme/images/feedback-abort.png)
 
 ## How to Use
 
