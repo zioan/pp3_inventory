@@ -122,6 +122,9 @@ The Inventory Management System significantly streamlines inventory management f
 
 Starting with a flowchart helped to design the project efficiently. Flowcharts simplified the complex logic, making it easier to understand the code and identify potential error points.
 
+![Logic Flow](assets/readme/images/logic-flow.jpeg)
+
+
 
 ## Data Model
 
@@ -269,5 +272,7 @@ By following these steps through Heroku's dashboard, I successfully deployed the
 - **Prompt Toolkit Documentation**: For advanced input handling.
 
 - **Stack Overflow**: For troubleshooting and code examples.
+
+- **[Lucidchart](https://www.lucidchart.com/pages/)**: For Logic Flowchart.
 
 [Back to Top](#inventory-management-system)
