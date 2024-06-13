@@ -60,7 +60,7 @@ def is_data_valid(value, type):
         try:
             # Check if it's a number and a positive number
             number = float(value)
-            return number > 0
+            return number >= 0
         except ValueError:
             return False
     return False  # If the type is neither "text" nor "positive number"
