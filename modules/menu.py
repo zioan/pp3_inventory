@@ -30,9 +30,8 @@ def main_menu():
     console.print(menu)
 
     choices = ["1", "2", "9", "0"]
-    input = user_input("Choose an operation: ", choices)
 
-    return input
+    return user_input("Choose an operation: ", choices)
 
 
 def operations_menu():
