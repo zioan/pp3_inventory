@@ -36,4 +36,9 @@ def main():
 
 # Run the main function only if this script is executed directly
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        # Handle the keyboard interrupt exception when the user presses Ctrl+C
+        print("\nApplication terminated by user. Quitting the application...")
+        sys.exit(0)
