@@ -216,7 +216,7 @@ def delete_item():
             delete_handler(item_index)
             break  # Exit the loop after handling the deletion
         else:
-            console.print("[yellow]Deletion canceled!\n")
+            console.print("\n[yellow]Deletion canceled!\n")
             return  # Exit the function after cancellation
 
 
@@ -291,7 +291,7 @@ def update_item():
         if user_confirmation.lower() == 'y':
             update_handler(index_to_update, updated_item[0])
         elif user_confirmation.lower() == 'n':
-            console.print("[yellow]Operation aborted!\n")
+            console.print("\n[yellow]Operation aborted!\n")
             return  # Exit the function after aborting the operation
 
         break  # Exit the loop after handling the update

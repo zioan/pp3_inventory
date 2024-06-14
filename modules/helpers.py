@@ -45,7 +45,7 @@ def is_operation_canceled(user_input, cancel_value):
     """
     console = Console()
     if user_input.lower() == cancel_value:
-        console.print("[yellow]Operation aborted!\n")
+        console.print("\n[yellow]Operation aborted!\n")
         return True
     return False
 
@@ -73,12 +73,12 @@ def get_valid_index(data, prompt):
         try:
             index = int(index)
             if index not in range(1, max_index + 1):
-                index_warning = f"Index should be between 1 and {max_index}."
-                console.print(f"[red]Invalid index '{index}'. {index_warning}")
+                i_warning = f"\nIndex should be between 1 and {max_index}."
+                console.print(f"\n[red]Invalid index '{index}'. {i_warning}")
                 continue
         except ValueError:
-            number_warning = "Please enter a number."
-            console.print(f"[red]Invalid input '{index}'. {number_warning}")
+            num_warning = "Please enter a number."
+            console.print(f"\n[red]Invalid input '{index}'. {num_warning}")
             continue
 
         return index

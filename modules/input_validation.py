@@ -21,7 +21,7 @@ def user_input(label, available_options=None, type=None, allow_empty=False):
 
         # Check if input length exceeds 20 characters
         if len(user_prompt) > 20:
-            console.print("[red]You cannot enter more than 20 characters")
+            console.print("\n[red]You cannot enter more than 20 characters")
             continue  # Skip to the next iteration and prompt the user again
 
         # Check if input is not empty when empty strings are not allowed
