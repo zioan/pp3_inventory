@@ -1,5 +1,7 @@
 # Inventory Management System
 
+[Live project hosted on Heroku](https://pp3-inventory-a00e4aaa5d23.herokuapp.com/)
+
 The Inventory Management System is a Python-based application designed to simplify the process of managing an inventory of items. Whether you're adding new items, updating existing ones, or deleting obsolete ones, this system provides a user-friendly interface to handle these tasks efficiently.
 
 ![Inventory Management System](assets/readme/images/inventory.png)
@@ -168,7 +170,7 @@ The Inventory Management System utilizes a simple yet effective data model to st
    - **Quantity**: The quantity or number of units available.
    - **Unit**: The unit of measurement for the item.
 
-2. **Google Sheets Integration**: The system integrates with Google Sheets to store inventory data. Google Sheets provides a familiar and accessible platform for users to manage their inventory, offering features such as collaboration, version history, and easy access from any device with internet connectivity.
+2. **Google Sheets Integration**: The system integrates with Google Sheets to store inventory data.
 
 3. **Validation and Error Handling**: The system incorporates validation checks to ensure data integrity and accuracy. Input validation is performed for fields such as quantity and index to prevent incorrect or invalid data entry. Additionally, error handling mechanisms are implemented to gracefully handle exceptions and provide informative error messages to users in case of unexpected issues.
 
@@ -183,22 +185,20 @@ Overall, the data model of the Inventory Management System is designed to be fle
 
 The Inventory Management System leverages several libraries and technologies to provide a seamless user experience and efficient inventory management capabilities. Key components include:
 
-1. **Python**: The system is built using Python, a versatile and widely-used programming language known for its simplicity and readability. Python provides the foundation for developing the application's logic and functionality.
+1. **[Python](https://www.python.org/)**: The system is built using Python, a versatile and widely-used programming language known for its simplicity and readability. Python provides the foundation for developing the application's logic and functionality.
 
-2. **Rich Library**: Rich is a Python library that enhances terminal output with rich formatting, colors, and styles. It is utilized in the system's user interface to create visually appealing menus, tables, and text formatting, improving readability and user experience.
+2. **[Rich Library](https://pypi.org/project/rich/)**: Rich is a Python library that enhances terminal output with rich formatting, colors, and styles. It is utilized in the system's user interface to create visually appealing menus, tables, and text formatting, improving readability and user experience.
 
-3. **gspread Library**: gspread is a Python library for accessing Google Sheets spreadsheets using the Google Sheets API. It enables seamless integration with Google Sheets, allowing the system to read and write inventory data to Google Sheets spreadsheets securely.
+3. **[gspread Library](https://pypi.org/project/gspread/)**: gspread is a Python library for accessing Google Sheets spreadsheets using the Google Sheets API. It enables seamless integration with Google Sheets, allowing the system to read and write inventory data to Google Sheets spreadsheets securely.
 
-4. **Google Sheets API**: The Google Sheets API provides programmatic access to Google Sheets spreadsheets, allowing the system to interact with inventory data stored in Google Sheets. It facilitates real-time data synchronization, collaboration, and version control for inventory management.
+4. **[Google Sheets API](https://developers.google.com/sheets/api/guides/concepts)**: The Google Sheets API provides programmatic access to Google Sheets spreadsheets, allowing the system to interact with inventory data stored in Google Sheets. It facilitates real-time data synchronization.
 
-5. **Text to ASCII Art Converter**: The system utilizes a text to ASCII art converter library to generate ASCII art for the welcome message, adding visual appeal to the user interface and enhancing the overall user experience.
-
-By leveraging these libraries and technologies, the Inventory Management System delivers a robust, feature-rich solution for efficient inventory management in a terminal-based environment.
+5. **[Text to ASCII Art Converter](https://pypi.org/project/art/)**: The system utilizes a text to ASCII art converter library to generate ASCII art for the welcome message, adding visual appeal to the user interface and enhancing the overall user experience.
 
 
 ## Testing
 
-The Inventory Management System undergoes rigorous testing to ensure functionality, reliability, and adherence to coding standards. Testing encompasses various aspects of the system, including input validation, compliance with PEP8 coding guidelines, and validation of user stories.
+The Inventory Management System undergoes rigorous testing to ensure functionality, reliability, and adherence to coding standards. Testing covers various aspects of the system including input validation, compliance with PEP8 coding guidelines, and validation of user stories.
 
 ### Input Testing
 
@@ -222,7 +222,7 @@ PEP8 testing focuses on ensuring that the codebase adheres to the guidelines out
 
 - **Code Structure**: Review the overall structure of the codebase to identify any potential improvements in organization and clarity.
 
-- **Code Linting**: Utilize automated code analysis tools such as Flake8 or Pylint to identify and correct violations of PEP8 guidelines.
+- **Code Linting**: Utilize automated code analysis tools such as Flake8 or Python Indent to identify and correct violations of PEP8 guidelines.
 
 ### Testing User Stories
 
@@ -236,8 +236,9 @@ Testing user stories involves verifying that the system's features and functiona
 
 By conducting thorough input testing, PEP8 testing, and testing of user stories, the Inventory Management System maintains high standards of quality, usability, and user satisfaction.
 
+**All Python files** have been passed through [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards.
 
-All Python files have been passed through [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards.
+![PEP8 Validation](assets/readme/images/pep8-validation.png)
 
 
 ## Bugs
@@ -252,6 +253,7 @@ The following bugs were identified and fixed during the development stage:
 
 4. **Fix search_inventory data retrieving after each operation**: Corrected an issue where the search_inventory function did not retrieve data correctly after performing an operation, ensuring accurate search results. In other words, the search functionality was serving outdated data.
 
+The headlines mentioned above represents the Git commit messages and can be tracked in the Git history.
 There are no known unfixed bugs in the Inventory Management System.
 
 
@@ -283,26 +285,28 @@ I deployed the Inventory Management System using Heroku's dashboard, which provi
 
 5. **Verifying Deployment**: Once the deployment process completed, I verified that my application was running smoothly by opening the provided Heroku URL in my web browser.
 
-By following these steps through Heroku's dashboard, I successfully deployed the Inventory Management System, making it accessible to users.
-
 
 ## Credits
 
+A big thank you for my mentor Spencer for helping me understand the requirements and guiding me through the realization of this project!
+
 ### Resources Used
 
-- **Heroku**: The platform provided seamless deployment and hosting services for the application.
+- **[Code Institute learning materials](https://codeinstitute.net/)**: For providing comprehensive learning resources and guidance throughout the development process.
 
-- **Google Sheets API**: Integration with the API enabled efficient data management and storage.
+- **[Python documentation](https://www.python.org/doc/)**: For detailed explanations and references that assisted in implementing various functionalities.
 
-- **Rich Library**: The Rich library enhanced the terminal interface with colorful styling and table formatting.
+- **[Heroku](https://www.heroku.com/)**: The platform provided seamless deployment and hosting services for the application.
 
-- **gspread Library**: This library facilitated interaction with Google Sheets, allowing seamless data retrieval and manipulation.
+- **[Google Sheets API](https://developers.google.com/sheets/api/guides/concepts)**: Integration with the API enabled efficient data management and storage.
 
-- **Text to ASCII Art Generator**: ASCII art in the application was generated using the "text2art" library.
+- **[Rich Library](https://pypi.org/project/rich/)**: The Rich library enhanced the terminal interface with colorful styling and table formatting.
 
-- **Prompt Toolkit Documentation**: For advanced input handling.
+- **[gspread Library](https://pypi.org/project/gspread/)**: This library facilitated interaction with Google Sheets, allowing seamless data retrieval and manipulation.
 
-- **Stack Overflow**: For troubleshooting and code examples.
+- **[Text to ASCII Art Converter](https://pypi.org/project/art/)**: ASCII art in the application was generated using the "text2art" library.
+
+- **[Prompt Toolkit Documentation](https://python-prompt-toolkit.readthedocs.io/en/master/pages/dialogs.html)**: For inspiration in input handling. There is no code used from this library; the entire input validation I made with vanilla Python.
 
 - **[Lucidchart](https://www.lucidchart.com/pages/)**: For Logic Flowchart.
 
