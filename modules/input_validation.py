@@ -21,22 +21,22 @@ def user_input(label, available_options=None, type=None, allow_empty=False):
 
         # Check if input length exceeds 20 characters
         if len(user_prompt) > 20:
-            console.print("[red bold]You cannot enter more than 20 characters")
+            console.print("[red]You cannot enter more than 20 characters")
             continue  # Skip to the next iteration and prompt the user again
 
         # Check if input is not empty when empty strings are not allowed
         if not allow_empty and user_prompt == "":
-            console.print("\n[red bold]This field cannot be empty.")
+            console.print("\n[red]This field cannot be empty.")
             continue  # Skip to the next iteration and prompt the user again
 
         # Validate input type
         if type and user_prompt and not is_data_valid(user_prompt, type):
-            console.print(f"\n[red bold]The value must be {type}")
+            console.print(f"\n[red]The value must be {type}")
             continue  # Skip to the next iteration and prompt the user again
 
         # Validate against available options
         if available_options and user_prompt not in available_options:
-            console.print("\n[bold red]Please select one available option")
+            console.print("\n[red]Please select one available option")
             continue  # Skip to the next iteration and prompt the user again
 
         # If all checks pass, return the valid input
