@@ -236,7 +236,7 @@ Testing user stories involves verifying that the system's features and functiona
 
 By conducting thorough input testing, PEP8 testing, and testing of user stories, the Inventory Management System maintains high standards of quality, usability, and user satisfaction.
 
-**All Python files** have been passed through [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards.
+**All Python files** have been validated using the [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards. Each file returned the same result: "All clear, no errors found."
 
 ![PEP8 Validation](assets/readme/images/pep8-validation.png)
 
