@@ -224,6 +224,10 @@ PEP8 testing focuses on ensuring that the codebase adheres to the guidelines out
 
 - **Code Linting**: Utilize automated code analysis tools such as Flake8 or Python Indent to identify and correct violations of PEP8 guidelines.
 
+**All Python files** have been validated using the [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards. Each file returned the same result: "All clear, no errors found."
+
+![PEP8 Validation](assets/readme/images/pep8-validation.png)
+
 ### Testing User Stories
 
 Testing user stories involves verifying that the system's features and functionality align with user expectations and requirements. Key aspects of testing user stories include:
@@ -235,10 +239,6 @@ Testing user stories involves verifying that the system's features and functiona
 - **Edge Case Testing**: Test user stories with edge cases to verify that the system handles uncommon or unexpected scenarios correctly.
 
 By conducting thorough input testing, PEP8 testing, and testing of user stories, the Inventory Management System maintains high standards of quality, usability, and user satisfaction.
-
-**All Python files** have been validated using the [Code Institute PEP8 Validator](https://pep8ci.herokuapp.com/) to ensure compliance with PEP8 standards. Each file returned the same result: "All clear, no errors found."
-
-![PEP8 Validation](assets/readme/images/pep8-validation.png)
 
 
 ## Bugs
