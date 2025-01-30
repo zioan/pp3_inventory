@@ -1,14 +1,14 @@
 <body>
-    <button onclick="window.location.reload()">Run Program</button>
+  <button onclick="window.location.reload()">Restart Inventory</button>
     <div id="terminal"></div>
 
     <script>
         var term = new Terminal({
-            cols: 80,
-            rows: 24
+      cols: 120,
+      rows: 40,
         });
         term.open(document.getElementById('terminal'));
-        term.writeln('Running startup command: python3 run.py');
+    term.writeln("Starting Inventory...");
         term.writeln('');
 
         var ws = new WebSocket(location.protocol.replace('http', 'ws') + '//' + location.hostname + (location.port ? (
